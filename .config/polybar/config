@@ -1,3 +1,14 @@
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;
+;;	    ____        __      __              
+;;	   / __ \____  / /_  __/ /_  ____ ______
+;;	  / /_/ / __ \/ / / / / __ \/ __ `/ ___/
+;;	 / ____/ /_/ / / /_/ / /_/ / /_/ / /    
+;;	/_/    \____/_/\__, /_.___/\__,_/_/     
+;;	              /____/                    
+;;
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 # Polybar config 
 # based upon DistroTube dotfile (https://gitlab.com/dwt1/dotfiles/-/blob/master/.config/polybar/config)
 # extended by qtile config (https://github.com/krive001/qtile-polybar/blob/master/etc/skel/.config/polybar/config)
@@ -510,7 +521,7 @@ font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
 
 modules-left = ewmh xwindow
 modules-center = date
-modules-right = memory2 sep2 cpu2 sep2 pavolume sep2 backlight sep2 pacman-updates sep2 battery sep2 wireless-network
+modules-right = memory2 cpu2 pavolume backlight pacman-updates battery wireless-network
 
 tray-detached = false
 tray-offset-x = 0
@@ -822,6 +833,90 @@ content-background = #7197E7
 ################################################################################
 ################################################################################
 
+[module/alsa]
+type = internal/alsa
+
+; Soundcard to be used
+; Usually in the format hw:# where # is the card number
+; You can find the different card numbers in `/proc/asound/cards`
+;;master-soundcard = default
+;;speaker-soundcard = default
+;;headphone-soundcard = default
+
+; Name of the master, speaker and headphone mixers
+; Use the following command to list available mixer controls:
+; $ amixer scontrols | sed -nr "s/.*'([[:alnum:]]+)'.*/\1/p"
+; If master, speaker or headphone-soundcard isn't the default, 
+; use `amixer -c # scontrols` instead where # is the number 
+; of the master, speaker or headphone soundcard respectively
+;
+; Default: Master
+;;master-mixer = Master
+
+; Optionally define speaker and headphone mixers
+; Default: none
+;;speaker-mixer = Speaker
+; Default: none
+;;headphone-mixer = Headphone
+
+; NOTE: This is required if headphone_mixer is defined
+; Use the following command to list available device controls
+; $ amixer controls | sed -r "/CARD/\!d; s/.*=([0-9]+).*name='([^']+)'.*/printf '%3.0f: %s\n' '\1' '\2'/e" | sort
+; You may also need to use `amixer -c # controls` as above for the mixer names
+; Default: none
+;;headphone-id = 9
+
+; Use volume mapping (similar to amixer -M and alsamixer), where the increase in volume is linear to the ear
+; Default: false
+;;mapped = true
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+;;interval = 5
+
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default
+format-muted-prefix = 
+label-muted = " Muted"
+label-muted-foreground = ${color.ac}
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+
+; If defined, it will replace <ramp-volume> when
+; headphones are plugged in to `headphone_control_numid`
+; If undefined, <ramp-volume> will be used for both
+; Only applies if <ramp-volume> is used
+ramp-headphones-0 = 
+ramp-headphones-1 = 
+
+;; Other Icons
+;						
+;		
+;
+
+################################################################################
+
 [module/arch-aur-updates]
 type = custom/script
 exec = ~/.config/polybar/scripts/check-all-updates.sh
@@ -832,6 +927,7 @@ format-background = #A77AC4
 format-prefix = "  "
 format-prefix-foreground = #fefefe
 
+################################################################################
 
 [module/aur-updates]
 type = custom/script
@@ -901,9 +997,27 @@ bar-empty = ─
 [module/battery]
 ;https://github.com/jaagr/polybar/wiki/Module:-battery
 type = internal/battery
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
 battery = BAT0
 adapter = AC0
-full-at = 100
+full-at = 94
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
 label-charging =  %percentage%%
@@ -1071,46 +1185,92 @@ label = "%date% %time% "
 [module/ewmh]
 type = internal/xworkspaces
 
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
 pin-workspaces = false
+
+; Create click handler used to focus desktop
+; Default: true
 enable-click = true
+; Create scroll handlers used to cycle desktops
+; Default: true
 enable-scroll = true
 reverse-scroll = true
 
+; icon-[0-9]+ = <desktop-name>;<icon>
+; NOTE: The desktop name needs to match the name configured by the WM
+; You can get a list of the defined desktops using:
+; $ xprop -root _NET_DESKTOP_NAMES
 ;extra icons to choose from
 ;http://fontawesome.io/cheatsheet/
 ;       v     
 
-icon-0 = 1;
-icon-1 = 2;
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-icon-5 = 6;
-icon-6 = 7;
-icon-7 = 8;
+icon-0 = WWW;
+icon-1 = DEV;>_
+icon-2 = SYS;
+icon-3 = DOC;
+icon-4 = VBOX;
+icon-5 = MUS;
+icon-6 = VID;
+icon-7 = GFX;
 #icon-8 = 9;
 #icon-9 = 10;
-#icon-default = " "
+icon-default = " "
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
+; Default: <label-state>
 format = <label-state>
+; Available tokens:
+;   %name%
+; Default: %name%
 label-monitor = %name%
 
-label-active = %name%
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-active = %icon% %name%
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
 label-active-underline= #6790eb
 label-active-padding = 1
 
-label-occupied = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %icon%
 label-occupied-background = ${colors.background}
 label-occupied-padding = 1
 
-label-urgent = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-urgent = %icon%
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 1
 
-label-empty = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = %icon%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 1
 format-foreground = ${colors.foreground}
@@ -1290,6 +1450,52 @@ format-underline = #3384d0
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
+################################################################################
+
+[module/menu]
+type = custom/menu
+
+; If true, <label-toggle> will be to the left of the menu items (default).
+; If false, it will be on the right of all the items.
+expand-right = true
+
+; "menu-LEVEL-N" has the same properties as "label-NAME" with
+; the additional "exec" property
+;
+; Available exec commands:
+;   menu-open-LEVEL
+;   menu-close
+; Other commands will be executed using "/usr/bin/env sh -c $COMMAND"
+menu-0-0 = Menu
+menu-0-0-exec = ~/.config/polybar/scripts/launcher.sh &
+menu-0-1 = Files
+menu-0-1-exec = dolphin &
+menu-0-2 = Terminal
+menu-0-2-exec = alacritty &
+menu-0-3 = Browser
+menu-0-3-exec = firefox &
+
+; Available tags:
+;   <label-toggle> (default) - gets replaced with <label-(open|close)>
+;   <menu> (default)
+; Note that if you use <label-toggle> you must also include
+; the definition for <label-open>
+
+;;format = <label-toggle> <menu>
+;;format-prefix = ${menu.icon-menu}
+format-spacing = 1 
+
+label-open = 
+label-close = 
+
+
+; Optional item separator
+; Default: none
+label-separator = |
+
+label-open-foreground = ${color.ac}
+label-close-foreground = ${color.ac}
+label-separator-foreground = ${color.ac}
 
 ################################################################################
 
@@ -1315,6 +1521,7 @@ bar-progress-fill-background = ${colors.background}
 bar-progress-indicator-foreground = ${colors.foreground}
 format-online-foreground = ${colors.foreground}
 format-online-background = ${colors.background}
+
 ################################################################################
 
 [module/networkspeedup]
@@ -1381,7 +1588,7 @@ format-underline = #c9d918
 [module/powermenu]
 type = custom/menu
 
-expand-right = true
+expand-right = false
 
 format-spacing = 1
 format = 
@@ -1401,14 +1608,14 @@ menu-0-0-exec = menu-open-1
 menu-0-1 = power off
 menu-0-1-exec = menu-open-2
 
-menu-1-0 = cancel
+menu-1-0 = back
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+menu-1-1-exec = systemctl reboot
 
 menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
+menu-2-0-exec = systemctl poweroff
+menu-2-1 = back
 menu-2-1-exec = menu-open-0
 
 ################################################################################
@@ -1431,6 +1638,10 @@ format-prefix-foreground = #FFBB00
 ;https://github.com/089kili/dotfiles/blob/master/polybar/config
 type = internal/pulseaudio
 
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
 ; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
 ; Default: true
 use-ui-max = true
@@ -1444,7 +1655,7 @@ interval = 5
 ;   <ramp-volume>
 ;   <bar-volume>
 format-volume = <ramp-volume> <label-volume>
-format-volume-foreground = #FFFFFF
+; format-volume-foreground = #FFFFFF
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -1461,7 +1672,7 @@ format-volume-foreground = #FFFFFF
 ;   %percentage% (default)
 ;   %decibels% (unreleased)
 label-muted = 
-label-muted-foreground = #FFFFFF
+; label-muted-foreground = #FFFFFF
 
 ; Only applies if <ramp-volume> is used
 ramp-volume-0 = 
@@ -1519,6 +1730,26 @@ format-underline = #0f0
 format-prefix = "  "
 format-prefix-foreground = #0f0
 label = %output:0:150%
+
+################################################################################
+
+[module/sysmenu]
+type = custom/text
+content = 
+
+; "content" has the same properties as "format-NAME"
+;;content-background = #000
+content-foreground = ${color.ac}
+;;content-padding = 4
+
+; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
+click-left = ~/.config/polybar/scripts/powermenu.sh
+;;click-middle = ~/.config/polybar/scripts/powermenu
+click-right = ~/.config/polybar/scripts/powermenu-alt.sh
+
+; "scroll-(up|down)" will be executed using "/usr/bin/env sh -c $COMMAND"
+;;scroll-up = ~/.config/polybar/scripts/powermenu
+;;scroll-down = ~/.config/polybar/scripts/powermenu
 
 ################################################################################
 
@@ -1767,7 +1998,13 @@ type = internal/xwindow
 ;   %title%
 ; Default: %title%
 label = %title%
-label-maxlen = 50
+label-maxlen = 30
+
+; Used instead of label when there is no window title
+; Available tokens:
+;   None
+;;label-empty = Arch Linux
+;;label-empty-foreground = #707880
 
 format-prefix = "  "
 format-foreground = ${colors.foreground}
