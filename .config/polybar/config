@@ -127,17 +127,18 @@ module-margin-left = 0
 module-margin-right = 0
 
 ;https://github.com/jaagr/polybar/wiki/Fonts
-font-0 = "UbuntuMono Nerd Font:size=10;2"
-font-1 = "UbuntuMono Nerd Font:size=16;3"
+font-0 = "NotoSans Nerd Font:size=9;2"
+font-1 = "NotoSans Nerd Font:size=16;3"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-5 = "NotoSansMono Nerd Font:size=9;2"
 
-modules-left = xwindow
+modules-left =  menu ewmh-kde xwindow
 modules-center = date spotify1
-modules-right = memory2 sep2 cpu2 sep2 pavolume sep2 backlight sep2 pacman-updates sep2 battery sep2 wireless-network sep2 powermenu
+modules-right = memory2 cpu2 pavolume backlight pacman-updates battery wireless-network sysmenu
 
-separator = 
+separator = "  "
 
 ;dim-value = 1.0
 
@@ -164,8 +165,8 @@ enable-ipc = true
 click-left =
 click-middle =
 click-right =
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+scroll-up = 
+scroll-down = 
 double-click-left =
 double-click-middle =
 double-click-right =
@@ -519,9 +520,9 @@ font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
 
-modules-left = ewmh xwindow
+modules-left = menu ewmh xwindow
 modules-center = date
-modules-right = memory2 cpu2 pavolume backlight pacman-updates battery wireless-network
+modules-right = memory2 cpu2 pavolume backlight pacman-updates battery wireless-network sysmenu
 
 tray-detached = false
 tray-offset-x = 0
@@ -894,7 +895,7 @@ label-volume = %percentage%%
 ;   %percentage% (default
 format-muted-prefix = 
 label-muted = " Muted"
-label-muted-foreground = ${color.ac}
+label-muted-foreground = ${colors.foreground}
 
 ; Only applies if <ramp-volume> is used
 ramp-volume-0 = 
@@ -914,7 +915,6 @@ ramp-headphones-1 = 
 ;						
 ;		
 ;
-
 ################################################################################
 
 [module/arch-aur-updates]
@@ -1020,7 +1020,7 @@ poll-interval = 5
 time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
-label-charging =  %percentage%%
+label-charging =  %{T6}%percentage%%{T-}
 format-charging-foreground = ${colors.foreground}
 format-charging-background = ${colors.background}
 format-charging-underline = #eaff00
@@ -1029,7 +1029,7 @@ format-charging-underline = #eaff00
 ;format-charging-underline = #a3c725
 
 format-discharging = <ramp-capacity> <label-discharging>
-label-discharging =  %percentage%%
+label-discharging =  %{T6}%percentage%%%{T-}
 format-discharging-underline = #00ff00
 format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background}
@@ -1145,7 +1145,7 @@ format-underline = #c9d918
 format-prefix = " "
 format-prefix-foreground = #fefefe
 
-label-font = 1
+label-font = 6
 
 ; Available tags:
 ;   <label> (default)
@@ -1209,14 +1209,14 @@ reverse-scroll = true
 ;http://fontawesome.io/cheatsheet/
 ;       v     
 
-icon-0 = WWW;
-icon-1 = DEV;>_
+icon-0 = WWW;
+icon-1 = DEV;
 icon-2 = SYS;
-icon-3 = DOC;
+icon-3 = CHAT;
 icon-4 = VBOX;
-icon-5 = MUS;
-icon-6 = VID;
-icon-7 = GFX;
+icon-5 = MUS;
+icon-6 = VID;
+icon-7 = GFX;
 #icon-8 = 9;
 #icon-9 = 10;
 icon-default = " "
@@ -1236,7 +1236,7 @@ label-monitor = %name%
 ;   %icon%
 ;   %index%
 ; Default: %icon%  %name%
-label-active = %icon% %name%
+label-active = %icon% %{T6}%name%%{T-}
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
 label-active-underline= #6790eb
@@ -1271,6 +1271,103 @@ label-urgent-padding = 1
 ;   %index%
 ; Default: %icon%  %name%
 label-empty = %icon%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 1
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+
+################################################################################
+
+[module/ewmh-kde]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = false
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = true
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = true
+reverse-scroll = true
+
+; icon-[0-9]+ = <desktop-name>;<icon>
+; NOTE: The desktop name needs to match the name configured by the WM
+; You can get a list of the defined desktops using:
+; $ xprop -root _NET_DESKTOP_NAMES
+;extra icons to choose from
+;http://fontawesome.io/cheatsheet/
+;       v     
+
+icon-0 = 1;
+icon-1 = VBOX;
+icon-2 = VBOX;
+icon-3 = GFX;
+icon-4 = DEV;
+icon-5 = WWW;
+icon-6 = CHAT;
+icon-7 = MUS;
+icon-8 = terminal;
+icon-9 = SYS;
+icon-default = " "
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
+; Default: <label-state>
+format = <label-state>
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-active = %icon%  %{T6}%name%%{T-}
+label-active-foreground = ${colors.foreground}
+label-active-background = ${colors.background}
+label-active-underline= #6790eb
+label-active-padding = 1
+
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %icon% 
+label-occupied-background = ${colors.background}
+label-occupied-padding = 1
+
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-urgent = %icon%  %name%
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-underline = ${colors.alert}
+label-urgent-padding = 1
+
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = %icon% 
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 1
 format-foreground = ${colors.foreground}
@@ -1417,7 +1514,8 @@ interval = 1
 ;   %mb_used%
 ;   %mb_free%
 ;   %mb_total%
-label = %percentage_used%%
+label = %{T6}%percentage_used%%%{T-}
+; label-font = 5
 
 format = <label>
 format-prefix = " "
@@ -1467,12 +1565,12 @@ expand-right = true
 ;   menu-close
 ; Other commands will be executed using "/usr/bin/env sh -c $COMMAND"
 menu-0-0 = Menu
-menu-0-0-exec = ~/.config/polybar/scripts/launcher.sh &
-menu-0-1 = Files
+menu-0-0-exec = $HOME/.config/polybar/scripts/launcher.sh &
+menu-0-1 = Files
 menu-0-1-exec = dolphin &
-menu-0-2 = Terminal
+menu-0-2 = Terminal
 menu-0-2-exec = alacritty &
-menu-0-3 = Browser
+menu-0-3 = Browser
 menu-0-3-exec = firefox &
 
 ; Available tags:
@@ -1485,17 +1583,25 @@ menu-0-3-exec = firefox &
 ;;format-prefix = ${menu.icon-menu}
 format-spacing = 1 
 
-label-open = 
-label-close = 
+label-open = "  "
+label-close = "  "
+; label-open = "  "
+; label-close = "  "
 
 
 ; Optional item separator
 ; Default: none
 label-separator = |
 
-label-open-foreground = ${color.ac}
-label-close-foreground = ${color.ac}
-label-separator-foreground = ${color.ac}
+label-open-foreground = ${colors.foreground}
+label-open-background = ${colors.background}
+label-open-underline = #69A6D6
+label-close-foreground = ${colors.foreground}
+label-close-background = ${colors.background}
+label-close-underline = #69A6D6
+label-separator-foreground = ${colors.foreground}
+label-separator-background = ${colors.background}
+; label-separator-underline = #69A6D6
 
 ################################################################################
 
@@ -1573,7 +1679,7 @@ format-prefix = "  "
 [module/pavolume]
 type = custom/script
 tail = true
-label = %output%
+label = %{T6}%output%%{T-}
 exec = ~/.config/polybar/scripts/pavolume.sh --listen
 click-right = exec pavucontrol
 click-left = ~/.config/polybar/scripts/pavolume.sh --togmute
@@ -1596,12 +1702,15 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-underline = #FF0000
 
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
+label-open = 
+label-open-foreground = ${colors.foreground}
+label-open-background = ${colors.background}
+label-close =  cancel
+label-close-foreground = ${colors.foreground}
+label-close-background = ${colors.background}
 label-separator = |
 label-separator-foreground = ${colors.foreground}
+label-separator-background = ${colors.background}
 
 menu-0-0 = reboot
 menu-0-0-exec = menu-open-1
@@ -1666,7 +1775,7 @@ format-volume = <ramp-volume> <label-volume>
 ; Available tokens:
 ;   %percentage% (default)
 ;   %decibels% (unreleased)
-;label-volume = %percentage%%
+label-volume = %{T6}%percentage%%%{T-}
 
 ; Available tokens:
 ;   %percentage% (default)
@@ -1735,12 +1844,13 @@ label = %output:0:150%
 
 [module/sysmenu]
 type = custom/text
-content = 
 
 ; "content" has the same properties as "format-NAME"
-;;content-background = #000
-content-foreground = ${color.ac}
-;;content-padding = 4
+; content = 
+content = 
+content-foreground = ${colors.foreground}
+content-background = ${colors.background}
+content-underline = #FF0000
 
 ; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
 click-left = ~/.config/polybar/scripts/powermenu.sh
@@ -1909,7 +2019,7 @@ label-disconnected-foreground = ${colors.foreground}
 type = internal/network
 interface = ${env:WIRELESS}
 interval = 3.0
-label-connected = %essid%  %upspeed:7%  %downspeed:7%
+label-connected = %essid%  %{T6}%upspeed:7%  %downspeed:7%%{T-}
 
 format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
