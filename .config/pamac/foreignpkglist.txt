@@ -1,16 +1,15 @@
-List packages, groups, repositories or files
-
-pamac list [options]
-
-options:
-  -i, --installed          : list installed packages
-  -o, --orphans            : list packages that were installed as dependencies
-                             but are no longer required by any installed
-                             package
-  -m, --foreign            : list packages that were not found in the
-                             repositories
-  -g, --groups [group(s)]  : list all packages that are members of the given
-                             groups, if no group is given list all groups
-  -r, --repos [repo(s)]    : list all packages available in the given repos, if
-                             no repo is given list all repos
-  -f, --files <package(s)> : list files owned by the given packages
+google-chrome        79.0.3945.88-1  AUR  220,7 MB
+nodejs-nativefier    7.7.1-1         AUR  30,2 MB
+whatsapp-nativefier  0.4.612-1       AUR  162,5 MB
+spotify              1:1.1.10.546-3  AUR  286,0 MB
+qtutilities          6.0.2-1         AUR  694,7 kB
+nerd-fonts-complete  2.0.0-5         AUR  1,8 GB
+startup-settings-git r45.516860c-1   AUR  240,8 kB
+debtap               3.2.2-1         AUR  321,5 kB
+xf86-input-mouse     1.9.3-1              120,8 kB
+c++utilities         5.0.1-1         AUR  601,6 kB
+qsyncthingtray-git   421-3           AUR  8,5 MB
+todoist              0.14.0-1        AUR  12,7 MB
+xf86-input-keyboard  1.9.0-3              41,0 kB
+ttf-ms-fonts         2.0-10          AUR  5,7 MB
+ttf-font-awesome-4   4.7.0-5         AUR  169,8 kB
