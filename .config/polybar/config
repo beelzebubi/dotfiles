@@ -224,21 +224,22 @@ module-margin-left = 0
 module-margin-right = 0
 
 ;https://github.com/jaagr/polybar/wiki/Fonts
-font-0 = "UbuntuMono Nerd Font:size=10;2"
-font-1 = "UbuntuMono Nerd Font:size=16;3"
+font-0 = "NotoSans Nerd Font:size=9;2"
+font-1 = "NotoSans Nerd Font:size=16;3"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-5 = "NotoSansMono Nerd Font:size=9;2"
 
-modules-left = i3 xwindow
+modules-left = menu i3 xwindow
 modules-center = date spotify1
-modules-right = memory2 sep2 cpu2 sep2 pavolume sep2 backlight sep2 pacman-updates sep2 battery sep2 wireless-network sep2 powermenu
+modules-right = memory2 cpu2 alsa backlight pacman-updates battery wireless-network sysmenu
 
-separator = 
+separator = " | "
 
 ;dim-value = 1.0
 
-tray-position = none
+tray-position = right
 ;none left right
 tray-detached = false
 tray-maxsize = 20
@@ -878,6 +879,9 @@ type = internal/alsa
 ;   <ramp-volume>
 ;   <bar-volume>
 format-volume = <ramp-volume> <label-volume>
+format-volume-foreground = ${colors.foreground}
+format-volume-background = ${colors.background}
+format-volume-underline = #c9d918
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -891,16 +895,17 @@ label-volume = %percentage%%
 
 ; Available tokens:
 ;   %percentage% (default
-format-muted-prefix = 
+format-muted-prefix = 
+format-muted-foreground = ${colors.foreground}
+format-muted-background = ${colors.background}
+format-muted-underline = ${colors.alert}
 label-muted = " Muted"
 label-muted-foreground = ${colors.foreground}
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
-ramp-volume-4 = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 ; If defined, it will replace <ramp-volume> when
 ; headphones are plugged in to `headphone_control_numid`
@@ -1203,7 +1208,7 @@ reverse-scroll = true
 
 icon-0 = WWW;
 icon-1 = DEV;
-icon-2 = SYS;
+icon-2 = SYS;
 icon-3 = CHAT;
 icon-4 = VBOX;
 icon-5 = MUS;
