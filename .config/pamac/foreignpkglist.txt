@@ -1,0 +1,16 @@
+List packages, groups, repositories or files
+
+pamac list [options]
+
+options:
+  -i, --installed          : list installed packages
+  -o, --orphans            : list packages that were installed as dependencies
+                             but are no longer required by any installed
+                             package
+  -m, --foreign            : list packages that were not found in the
+                             repositories
+  -g, --groups [group(s)]  : list all packages that are members of the given
+                             groups, if no group is given list all groups
+  -r, --repos [repo(s)]    : list all packages available in the given repos, if
+                             no repo is given list all repos
+  -f, --files <package(s)> : list files owned by the given packages
