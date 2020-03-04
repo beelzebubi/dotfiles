@@ -626,7 +626,7 @@ strip-wsnumbers = false
 ; Sort the workspaces by index instead of the default
 ; sorting that groups the workspaces by output
 ; Default: false
-index-sort = false
+index-sort = true
 
 ; Create click handler used to focus workspace
 ; Default: true
@@ -655,16 +655,16 @@ fuzzy-match = false
 ;http://fontawesome.io/cheatsheet/
 ;       v     
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+icon-0 = WWW;
+icon-1 = DEV;
+icon-2 = SYS;
+icon-3 = CHAT;
+icon-4 = VBOX;
+icon-5 = MUS;
+icon-6 = VID;
+icon-7 = GFX;
+#icon-8 = 9;
+#icon-9 = 10;
 ws-icon-default = " "
 
 ; Available tags:
