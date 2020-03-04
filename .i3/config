@@ -67,15 +67,15 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 ################################################################################################
 
 # Screen brightness controls
- bindsym XF86MonBrightnessUp exec "xbacklight -inc 2; notify-send 'brightness up'"
- bindsym XF86MonBrightnessDown exec "xbacklight -dec 2; notify-send 'brightness down'"
+# bindsym XF86MonBrightnessUp exec "xbacklight -inc 2%; notify-send 'brightness up'"
+# bindsym XF86MonBrightnessDown exec "xbacklight -dec 2%; notify-send 'brightness down'"
 #bindsym XF86MonBrightnessUp exec "xbacklight -inc 2"
 #bindsym XF86MonBrightnessDown exec xbacklight -dec 2
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec thunar
+bindsym $mod+F2 exec chromium
+bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 # bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+F5 exec terminal -e 'mocp'
