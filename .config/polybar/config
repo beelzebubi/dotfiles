@@ -231,9 +231,9 @@ font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
 font-5 = "NotoSansMono Nerd Font:size=9;2"
 
-modules-left = menu i3 xwindow
-modules-center = date spotify1
-modules-right = memory2 cpu2 alsa backlight pacman-updates battery wireless-network sysmenu
+modules-left = sysmenu i3 xwindow
+modules-center = date
+modules-right = memory2 cpu2 alsa backlight battery wireless-network
 
 separator = " | "
 
@@ -246,7 +246,7 @@ tray-maxsize = 20
 tray-background = ${colors.background}
 tray-offset-x = 0
 tray-offset-y = 0
-tray-padding = 4
+tray-padding = 2
 tray-scale = 1.0
 
 #i3: Make the bar appear below windows
@@ -2031,7 +2031,8 @@ label-disconnected-foreground = ${colors.foreground}
 type = internal/network
 interface = ${env:WIRELESS}
 interval = 3.0
-label-connected = %essid%  %{T6}%upspeed:7%  %downspeed:7%%{T-}
+label-connected = %essid%
+; label-connected = %essid%  %{T6}%upspeed:7%  %downspeed:7%%{T-}
 ; label-connected =  %{T6}%upspeed:7%  %downspeed:7%%{T-}
 
 format-connected = <label-connected>

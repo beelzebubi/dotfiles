@@ -212,6 +212,7 @@ assign [class="Telegram"] 		$ws4
 assign [class="Whatsapp"] 		$ws4
 assign [class="(?i)virtualbox"] $ws5
 assign [class="Spotify"] 		$ws6
+assign [class="Viewnior"]		$ws8
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
