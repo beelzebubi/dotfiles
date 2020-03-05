@@ -86,7 +86,7 @@
         <copyOwnershipFromParent>false</copyOwnershipFromParent>
         <modTimeWindowS>0</modTimeWindowS>
     </folder>
-    <folder id="odxew-5sf7j" label="wallpapers" path="/home/tom/Bilder/wallpapers" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <folder id="odxew-5sf7j" label="wallpapers" path="/home/tom/Pictures/wallpapers/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AQRHRGJ-BK5E5V7-3CVFDZC-AXK4TIU-SVYMMC4-RE76TUI-MHSQRAC-NI5XIQM" introducedBy=""></device>
         <device id="GKXV6VB-6HKETQH-2PSHSLX-6DVMVTU-MGNJRHG-QUKBGGI-SR6MQSY-N7DCRQU" introducedBy=""></device>
