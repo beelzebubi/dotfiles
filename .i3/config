@@ -36,7 +36,7 @@ font xft:NotoSans Nerd Font 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym Ctrl+Shift+q kill
@@ -49,7 +49,7 @@ bindsym Mod1+space exec --no-startup-id rofi -show run
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
 # rofi-bluetooth
-bindsym $mod+b exec --no-startup-id ~/Programme/rofi-bluetooth/rofi-bluetooth
+bindsym $mod+b exec --no-startup-id rofi-bluetooth
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -67,20 +67,22 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 2%; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 2%; notify-send 'brightness down'"
-#bindsym XF86MonBrightnessUp exec "xbacklight -inc 2"
-#bindsym XF86MonBrightnessDown exec xbacklight -dec 2
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 2%; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 2%; notify-send 'brightness down'"
+# bindsym XF86MonBrightnessUp exec "xbacklight -inc 2"
+# bindsym XF86MonBrightnessDown exec xbacklight -dec 2
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+F1 exec pamac-manager
 bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 # bindsym $mod+Shift+F3 exec pcmanfm_pkexec
-bindsym $mod+F5 exec terminal -e 'mocp'
+# bindsym $mod+F5 exec terminal -e 'mocp'
+bindsym $mod+F5 exec terminal -e 'spt'
 bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+bindsym $mod+Ctrl+t exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
@@ -159,14 +161,14 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 WWW
-set $ws2 DEV
-set $ws3 SYS
-set $ws4 CHAT
-set $ws5 VBOX
-set $ws6 MUS
-set $ws7 VID
-set $ws8 GFX
+set $ws1 1:WWW
+set $ws2 2:DEV
+set $ws3 3:SYS
+set $ws4 4:CHAT
+set $ws5 5:VBOX
+set $ws6 6:MUS
+set $ws7 7:VID
+set $ws8 8:GFX
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -301,10 +303,11 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; sleep 1; compton -b --config ~/.config/compton/compton.conf
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
+# exec --no-startup-id xfce4-power-manager
+exec --no-startup-id lxqt-powermanagement
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
@@ -315,9 +318,12 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id ~/.config/polybar/launch-i3.sh
-exec --no-startup-id /usr/bin/telegram-desktop
+exec --no-startup-id telegram-desktop
+# exec --no-startup-id /usr/bin/telegram-desktop
 exec --no-startup-id /usr/bin/syncthing --no-browser
 exec --no-startup-id nextcloud
+exec --no-startup-id redshift-gtk
+exec --no-startup-id libinput-gestures-setup start
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:

@@ -233,7 +233,7 @@ font-5 = "NotoSansMono Nerd Font:size=9;2"
 
 modules-left = sysmenu i3 xwindow
 modules-center = date
-modules-right = memory2 cpu2 alsa backlight battery wireless-network
+modules-right = memory2 cpu2 alsa xbacklight battery wireless-network
 
 separator = " | "
 
@@ -617,7 +617,7 @@ type = internal/i3
 ; on different bars
 ;
 ; Default: false
-pin-workspaces = true
+pin-workspaces = false
 
 ; This will split the workspace name on ':'
 ; Default: false
@@ -649,11 +649,11 @@ reverse-scroll = false
 ; Example: code;♚ will apply the icon to all workspaces
 ; containing 'code' in the label
 ; Default: false
-fuzzy-match = false
+fuzzy-match = extra
 
-;extra icons to choose from
+;true icons to choose from
 ;http://fontawesome.io/cheatsheet/
-;       v     
+;            
 
 icon-0 = WWW;
 icon-1 = DEV;
@@ -672,10 +672,10 @@ ws-icon-default = " "
 ;   <label-mode> (default)
 format = <label-state> <label-mode>
 
-label-mode = %mode%
-label-mode-padding = 2
-label-mode-foreground = #000000
-label-mode-background = #FFBB00
+;label-mode = %mode%
+;label-mode-padding = 2
+;label-mode-foreground = #000000
+;label-mode-background = #FFBB00
 
 ; Available tokens:
 ;   %name%
@@ -703,7 +703,7 @@ label-unfocused-foreground = ${colors.foreground}
 label-unfocused-underline =
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %icon% %name%
+label-visible = %icon% 
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = 2
@@ -714,7 +714,7 @@ label-visible-padding = 2
 ;   %index%
 ; Default: %icon%  %name%
 ; urgent = Workspace with urgency hint set
-label-urgent = %icon% %name%
+label-urgent = %icon% 
 label-urgent-background = ${self.label-focused-background}
 label-urgent-foreground = #db104e
 label-urgent-padding = 2
@@ -1247,7 +1247,7 @@ label-active-padding = 1
 ; Default: %icon%  %name%
 label-occupied = %icon%
 label-occupied-background = ${colors.background}
-label-occupied-padding = 1
+label-occupied-padding = 2
 
 
 ; Available tokens:
@@ -1259,7 +1259,7 @@ label-urgent = %icon%
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
-label-urgent-padding = 1
+label-urgent-padding = 2
 
 
 ; Available tokens:
@@ -1269,7 +1269,7 @@ label-urgent-padding = 1
 ; Default: %icon%  %name%
 label-empty = %icon%
 label-empty-foreground = ${colors.foreground}
-label-empty-padding = 1
+label-empty-padding = 2
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
@@ -1859,10 +1859,11 @@ type = custom/text
 
 ; "content" has the same properties as "format-NAME"
 ; content = 
-content = 
+content = "  "
 content-foreground = ${colors.foreground}
 content-background = ${colors.background}
 content-underline = #FF0000
+content-overline = #FF0000
 
 ; "click-(left|middle|right)" will be executed using "/usr/bin/env sh -c $COMMAND"
 click-left = ~/.config/polybar/scripts/powermenu.sh
@@ -2071,13 +2072,20 @@ ramp-signal-foreground = ${colors.foreground}
 [module/xbacklight]
 ;https://github.com/jaagr/polybar/wiki/Module:-xbacklight
 type = internal/xbacklight
-format = <label> <bar>
+
+; Create scroll handlers used to set the backlight value
+; Default: true
+enable-scroll = true
+
+; format = <label> <bar>
+format = <label>
 format-prefix = "   "
 format-prefix-foreground = ${colors.foreground}
 format-prefix-background = ${colors.background}
 format-prefix-underline = #9f78e1
 format-underline = #9f78e1
 label = %percentage%%
+
 bar-width = 10
 bar-indicator = 
 bar-indicator-foreground = #fff
@@ -2088,6 +2096,7 @@ bar-fill-foreground = #9f78e1
 bar-empty = 
 bar-empty-font = 2
 bar-empty-foreground = #fff
+
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
