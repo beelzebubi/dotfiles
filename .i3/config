@@ -79,11 +79,14 @@ bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 # bindsym $mod+Shift+F3 exec pcmanfm_pkexec
+bindsym $mod+F4 exec subl
 # bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+F5 exec terminal -e 'spt'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+F5 exec kitty -e 'spt'
+# bindsym $mod+t exec --no-startup-id pkill compton
+# bindsym $mod+Ctrl+t exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
+bindsym $mod+t exec --no-startup-id pkill picom
+bindsym $mod+Ctrl+t exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+bindsym $mod+Shift+d --release exec "killall dunst; notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
@@ -218,6 +221,7 @@ assign [class="Viewnior"]		$ws8
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
+for_window [title="spt"] floating enable border pixel 1
 for_window [class="calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
@@ -303,7 +307,8 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b --config ~/.config/compton/compton.conf
+# exec --no-startup-id nitrogen --restore; sleep 1; compton -b --config ~/.config/compton/compton.conf
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config ~/.config/picom/picom.conf
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 # exec --no-startup-id xfce4-power-manager
@@ -312,7 +317,7 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util

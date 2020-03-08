@@ -53,13 +53,23 @@ format-margin =
 format-offset =
 
 [colors]
-; Nord theme ============
-background = #292d3e
-foreground = #c0c5ce
-alert = #bd2c40
+; Visiblue theme ============
+background = #162b5b
+foreground = #99cccc
+alert = #9999ff
+line = #00ccff
 volume-min = #a3be8c
 volume-med = #ebcb8b
 volume-max = #bf616a
+; =======================
+
+; Nord theme ============
+; background = #292d3e
+; foreground = #c0c5ce
+; alert = #bd2c40
+; volume-min = #a3be8c
+; volume-med = #ebcb8b
+; volume-max = #bf616a
 ; =======================
 
 ; Gotham theme ==========
@@ -81,6 +91,7 @@ volume-max = #bf616a
 ;primary = #ffb52a
 ;secondary = #e60053
 ;alert = #bd2c40
+; =======================
 
 ################################################################################
 ################################################################################
@@ -224,12 +235,15 @@ module-margin-left = 0
 module-margin-right = 0
 
 ;https://github.com/jaagr/polybar/wiki/Fonts
-font-0 = "NotoSans Nerd Font:size=9;2"
-font-1 = "NotoSans Nerd Font:size=16;3"
+font-0 = "Hack Nerd Font:size=9;2"
+font-1 = "Hack Nerd Font:style=bold:size=16;3"
+; font-0 = "NotoSans Nerd Font:size=9;2"
+; font-1 = "NotoSans Nerd Font:size=16;3"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
 font-5 = "NotoSansMono Nerd Font:size=9;2"
+font-6 = "Hack Nerd Font:style=bold:size=10;3"
 
 modules-left = sysmenu i3 xwindow
 modules-center = date
@@ -687,7 +701,7 @@ format = <label-state> <label-mode>
 label-focused = %icon% %name%
 label-focused-background = ${colors.background}
 label-focused-foreground = ${colors.foreground}
-label-focused-underline = #AD69AF
+label-focused-underline = ${colors.line}
 label-focused-padding = 2
 
 ; Available tokens:
@@ -881,7 +895,7 @@ type = internal/alsa
 format-volume = <ramp-volume> <label-volume>
 format-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.background}
-format-volume-underline = #c9d918
+format-volume-underline = ${colors.line}
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -941,7 +955,7 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-prefix = "  "
 format-prefix-foreground = #FFBB00
-format-underline = #FFBB00
+format-underline = ${colors.line}
 
 ################################################################################
 
@@ -953,7 +967,7 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-prefix-foreground = #7D49B6
 format-prefix-underline = #7D49B6
-format-underline = #7D49B6
+format-underline = ${colors.line}
 
 ################################################################################
 
@@ -973,7 +987,7 @@ card = intel_backlight
 format = <label>
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #c9d918
+format-underline = ${colors.line}
 format-prefix = "   "
 ;format-prefix-foreground = #fefefe
 ;format-prefix-background = #A77AC4
@@ -1029,14 +1043,14 @@ format-charging = <animation-charging> <label-charging>
 label-charging =  %{T6}%percentage%%{T-}
 format-charging-foreground = ${colors.foreground}
 format-charging-background = ${colors.background}
-format-charging-underline = #eaff00
+format-charging-underline = ${colors.line}
 ;format-charging-foreground = #fefefe
 ;format-charging-background = #A77AC4
 ;format-charging-underline = #a3c725
 
 format-discharging = <ramp-capacity> <label-discharging>
 label-discharging =  %{T6}%percentage%%%{T-}
-format-discharging-underline = #00ff00
+format-discharging-underline = ${colors.line}
 format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background}
 
@@ -1071,7 +1085,7 @@ click-left = ~/.config/polybar/scripts/compton-toggle.sh
 interval = 5
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-;format-underline = #00AF02
+;format-underline = ${colors.line}
 
 ################################################################################
 
@@ -1086,7 +1100,7 @@ format-background = ${colors.background}
 ;   
 format-prefix = " "
 format-prefix-foreground = #cd1f3f
-format-underline = #645377
+format-underline = ${colors.line}
 
 ; Available tags:
 ;   <label> (default)
@@ -1138,9 +1152,9 @@ type = internal/cpu
 interval = 1
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #c9d918
+format-underline = ${colors.line}
 format-prefix = " "
-format-prefix-foreground = #fefefe
+# format-prefix-foreground = #fefefe
 
 label-font = 6
 
@@ -1171,11 +1185,12 @@ date = " %a %d. %b %Y"
 date-alt = " %a %d. %b %Y"
 time = %H:%M
 time-alt = %H:%M
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = #fefefe
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 label = "%date% %time% "
+label-font = 7
 
 #################################################################
 
@@ -1236,7 +1251,7 @@ label-monitor = %name%
 label-active = %icon% %{T6}%name%%{T-}
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
-label-active-underline= #6790eb
+label-active-underline = ${colors.line}
 label-active-padding = 1
 
 
@@ -1333,7 +1348,7 @@ label-monitor = %name%
 label-active = %icon%  %{T6}%name%%{T-}
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
-label-active-underline= #6790eb
+label-active-underline = ${colors.line}
 label-active-padding = 1
 
 
@@ -1441,16 +1456,6 @@ format-underline = #4B5665
 
 ################################################################################
 
-[module/jgmenu]
-type = custom/script
-interval = 120
-exec = echo "ArcoLinux"
-click-left = "jgmenu_run >/dev/null 2>&1 &"
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-
-################################################################################
-
 [module/load-average]
 type = custom/script
 exec = uptime | grep -ohe 'load average[s:][: ].*' | awk '{ print $3" "$4" "$5"," }' | sed 's/,//g'
@@ -1519,7 +1524,7 @@ format-prefix = " "
 format-prefix-foreground = #fefefe
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #c9d918
+format-underline = ${colors.line}
 
 ################################################################################
 
@@ -1699,7 +1704,7 @@ scroll-up = ~/.config/polybar/scripts/pavolume.sh --up
 scroll-down = ~/.config/polybar/scripts/pavolume.sh --down
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #c9d918
+format-underline = ${colors.line}
 
 ################################################################################
 
@@ -2040,10 +2045,10 @@ format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
+format-connected-underline = ${colors.line}
 format-connected-prefix = "  "
 format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
-format-connected-underline = #18d94b
 
 label-disconnected = %ifname% disconnected
 label-disconnected-foreground = ${colors.alert}
@@ -2055,7 +2060,7 @@ format-disconnected-background = ${colors.background}
 format-disconnected-prefix = "  "
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-prefix-background = ${colors.background}
-format-disconnected-underline =${colors.alert}
+format-disconnected-underline = ${colors.alert}
 
 ramp-signal-0 = ▁
 ramp-signal-1 = ▂
@@ -2082,8 +2087,7 @@ format = <label>
 format-prefix = "   "
 format-prefix-foreground = ${colors.foreground}
 format-prefix-background = ${colors.background}
-format-prefix-underline = #9f78e1
-format-underline = #9f78e1
+format-prefix-underline = ${colors.line}
 label = %percentage%%
 
 bar-width = 10
@@ -2099,6 +2103,7 @@ bar-empty-foreground = #fff
 
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
+format-underline = ${colors.line}
 
 ################################################################################
 
@@ -2131,7 +2136,7 @@ type = internal/xwindow
 ;   %title%
 ; Default: %title%
 label = %title%
-label-maxlen = 30
+label-maxlen = 50
 
 ; Used instead of label when there is no window title
 ; Available tokens:
