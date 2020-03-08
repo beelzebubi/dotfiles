@@ -1,5 +1,5 @@
 <configuration version="29">
-    <folder id="cmfrs-hfgtr" label="matlab_skripte" path="/media/win_disk/Cloud/Arbeit/Matlab/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <folder id="cmfrs-hfgtr" label="matlab_skripte" path="/home/tom/Qsync/matlab_skripte" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AQRHRGJ-BK5E5V7-3CVFDZC-AXK4TIU-SVYMMC4-RE76TUI-MHSQRAC-NI5XIQM" introducedBy=""></device>
         <device id="GKXV6VB-6HKETQH-2PSHSLX-6DVMVTU-MGNJRHG-QUKBGGI-SR6MQSY-N7DCRQU" introducedBy=""></device>
