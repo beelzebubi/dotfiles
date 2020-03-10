@@ -213,8 +213,9 @@ bindsym $mod+Shift+Ctrl+Left move container to workspace prev; workspace prev
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
 # assign [class="Alacritty"] 		$ws2
-assign [class="Telegram"] 		$ws4
-assign [class="Whatsapp"] 		$ws4
+assign [class="htop"]           $ws3
+assign [class="Telegram"]       $ws4
+assign [class="whatsdesk"] 		$ws4
 assign [class="(?i)virtualbox"] $ws5
 assign [class="Spotify"] 		$ws6
 assign [class="Viewnior"]		$ws8
@@ -309,17 +310,22 @@ bindsym $mod+9 exec --no-startup-id blurlock
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id nitrogen --restore; sleep 1; compton -b --config ~/.config/compton/compton.conf
 exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config ~/.config/picom/picom.conf
+exec --no-startup-id htop
+exec --no-startup-id gnome-power-manager
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 # exec --no-startup-id xfce4-power-manager
-exec --no-startup-id lxqt-powermanagement
+# exec --no-startup-id lxqt-powermanagement
+# exec --no-startup-id mate-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
+# exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id ~/.i3/autostart/i3autolocker.sh
+exec --no-startup-id ~/.i3/autostart/launch-whatsdesk.sh
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id ~/.config/polybar/launch-i3.sh
@@ -329,6 +335,7 @@ exec --no-startup-id /usr/bin/syncthing --no-browser
 exec --no-startup-id nextcloud
 exec --no-startup-id redshift-gtk
 exec --no-startup-id libinput-gestures-setup start
+exec --no-startup-id whatsdesk
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
