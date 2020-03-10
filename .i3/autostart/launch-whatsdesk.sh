@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sleep 30
+sleep 10
 /var/lib/snapd/snap/bin/whatsdesk
