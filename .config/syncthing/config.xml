@@ -1,4 +1,4 @@
-<configuration version="29">
+<configuration version="30">
     <folder id="cmfrs-hfgtr" label="matlab_skripte" path="/home/tom/Qsync/matlab_skripte" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AQRHRGJ-BK5E5V7-3CVFDZC-AXK4TIU-SVYMMC4-RE76TUI-MHSQRAC-NI5XIQM" introducedBy=""></device>
@@ -191,12 +191,13 @@
         <trafficClass>0</trafficClass>
         <defaultFolderPath>~</defaultFolderPath>
         <setLowPriority>true</setLowPriority>
-        <maxConcurrentScans>0</maxConcurrentScans>
+        <maxFolderConcurrency>0</maxFolderConcurrency>
         <crashReportingURL>https://crash.syncthing.net/newcrash</crashReportingURL>
         <crashReportingEnabled>true</crashReportingEnabled>
         <stunKeepaliveStartS>180</stunKeepaliveStartS>
         <stunKeepaliveMinS>20</stunKeepaliveMinS>
         <stunServer>default</stunServer>
         <databaseTuning>auto</databaseTuning>
+        <maxConcurrentIncomingRequestKiB>0</maxConcurrentIncomingRequestKiB>
     </options>
 </configuration>

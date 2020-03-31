@@ -27,4 +27,5 @@ DIS_BRIGHTNESS="($xbacklight -get)"
 #   --timer 3600 \
 #     'systemctl suspend' \
 #     ''
-xidlehook --not-when-audio --timer 600 'xbacklight -set 1' "xbacklight -set $DIS_BRIGHTNESS" --timer 10 "xbacklight -set $DIS_BRIGHTNESS; i3lock -i /home/tom/Pictures/wallpapers/OPM/56055_one_punch_man.png" '' --timer 10 'xbacklight -set 1' "xbacklight -set $DIS_BRIGHTNESS" --timer 300 'systemctl suspend' ''
+# xidlehook --not-when-audio --timer 600 'xbacklight -set 1' "xbacklight -set $DIS_BRIGHTNESS" --timer 10 "xbacklight -set $DIS_BRIGHTNESS; i3lock -i /home/tom/Pictures/wallpapers/OPM/56055_one_punch_man.png" '' --timer 10 'xbacklight -set 1' "xbacklight -set $DIS_BRIGHTNESS" --timer 300 'systemctl suspend' ''
+xidlehook --not-when-audio --timer 600 'xbacklight -set 1' "xbacklight -set 30%" --timer 10 "xbacklight -set 30%; i3lock -i /home/tom/Pictures/wallpapers/OPM/56055_one_punch_man.png" '' --timer 10 'xbacklight -set 1' "xbacklight -set 30%" --timer 300 'systemctl suspend' ''

@@ -54,22 +54,23 @@ format-offset =
 
 [colors]
 ; Visiblue theme ============
-background = #162b5b
-foreground = #99cccc
-alert = #9999ff
-line = #00ccff
-volume-min = #a3be8c
-volume-med = #ebcb8b
-volume-max = #bf616a
+# background = #BA162b5b
+# foreground = #99cccc
+# alert = #9999ff
+# line = #00ccff
+# volume-min = #a3be8c
+# volume-med = #ebcb8b
+# volume-max = #bf616a
 ; =======================
 
 ; Nord theme ============
-; background = #292d3e
-; foreground = #c0c5ce
-; alert = #bd2c40
-; volume-min = #a3be8c
-; volume-med = #ebcb8b
-; volume-max = #bf616a
+background = #292d3e
+foreground = #c0c5ce
+alert = #bd2c40
+line = #88C0D0
+volume-min = #a3be8c
+volume-med = #ebcb8b
+volume-max = #bf616a
 ; =======================
 
 ; Gotham theme ==========
@@ -206,9 +207,9 @@ override-redirect = false
 bottom = false
 fixed-center = true
 width = 100%
-height = 24
-;offset-x = 1%
-;offset-y = 1%
+height = 26
+# offset-x = 1%
+# offset-y = 1%
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -218,7 +219,7 @@ foreground = ${colors.foreground}
 ;background-0 =
 
 radius = 0.0
-line-size = 2
+line-size = 3
 line-color = #000000
 
 border-size = 0
@@ -235,14 +236,14 @@ module-margin-left = 0
 module-margin-right = 0
 
 ;https://github.com/jaagr/polybar/wiki/Fonts
-font-0 = "Hack Nerd Font:size=9;2"
+font-0 = "Hack Nerd Font:size=10;2"
 font-1 = "Hack Nerd Font:style=bold:size=16;3"
 ; font-0 = "NotoSans Nerd Font:size=9;2"
 ; font-1 = "NotoSans Nerd Font:size=16;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
-font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
-font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
-font-5 = "NotoSansMono Nerd Font:size=9;2"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
+font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
+font-4 = "Font Awesome 5 Brands:pixelsize=10;1"
+font-5 = "NotoSansMono Nerd Font:size=10;2"
 font-6 = "Hack Nerd Font:style=bold:size=10;3"
 
 modules-left = sysmenu i3 xwindow
@@ -256,7 +257,7 @@ separator = " | "
 tray-position = right
 ;none left right
 tray-detached = false
-tray-maxsize = 20
+tray-maxsize = 15
 tray-background = ${colors.background}
 tray-offset-x = 0
 tray-offset-y = 0
@@ -702,7 +703,7 @@ label-focused = %icon% %name%
 label-focused-background = ${colors.background}
 label-focused-foreground = ${colors.foreground}
 label-focused-underline = ${colors.line}
-label-focused-padding = 1
+label-focused-padding = 2
 
 ; Available tokens:
 ;   %name%
@@ -1864,13 +1865,13 @@ type = custom/text
 
 ; "content" has the same properties as "format-NAME"
 ; content = 
-content = "  "
-content-foreground = ${colors.foreground}
-content-background = ${colors.background}
-content-underline = #FF0000
-content-overline = #FF0000
+content = "    "
 # content-foreground = ${colors.foreground}
-# content-background = #FF0000
+# content-background = ${colors.background}
+# content-underline = #FF0000
+# content-overline = #FF0000
+content-foreground = ${colors.background}
+content-background = ${colors.line}
 # content-underline = ${colors.background}
 # content-overline = ${colors.background}
 
@@ -2105,6 +2106,12 @@ bar-empty = 
 bar-empty-font = 2
 bar-empty-foreground = #fff
 
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-underline = ${colors.line}
@@ -2139,8 +2146,8 @@ type = internal/xwindow
 ; Available tokens:
 ;   %title%
 ; Default: %title%
-label = %title%
-label-maxlen = 50
+label = %title:0:75:...%
+# label-maxlen = 50
 
 ; Used instead of label when there is no window title
 ; Available tokens:
