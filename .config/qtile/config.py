@@ -86,22 +86,22 @@ keys = [
              ),
         ### Multimedia
          Key(
-             XF86MonBrightnessUp,
+             "XF86MonBrightnessUp",
              lazy.spawn("xbacklight -inc 2%; notify-send 'brightness up'"),
              desc='Increase display brightness by 2%'
              ),
          Key(
-             ["shift"], XF86MonBrightnessUp,
+             ["shift"], "XF86MonBrightnessUp",
              lazy.spawn("xbacklight -inc 25%; notify-send 'brightness up'"),
              desc='Increase display brightness by 2%'
              ),
          Key(
-             XF86MonBrightnessDown,
+             "XF86MonBrightnessDown",
              lazy.spawn("xbacklight -dec 2%; notify-send 'brightness up'"),
              desc='Increase display brightness by 2%'
              ),
          Key(
-             ["shift"], XF86MonBrightnessDown,
+             ["shift"], "XF86MonBrightnessDown",
              lazy.spawn("xbacklight -dec 25%; notify-send 'brightness up'"),
              desc='Increase display brightness by 2%'
              ),
@@ -142,6 +142,7 @@ keys = [
              lazy.layout.down(),
              desc='Move focus down in current stack pane'
              ),
+         Key(
              [mod], "Down",
              lazy.layout.down(),
              desc='Move focus down in current stack pane'
@@ -704,250 +705,3 @@ def start_once():
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
-
-
-
-
-
-
-
-##### WIDGETS #####
-
-def init_widgets_list():
-    prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-    widgets_list = [
-               widget.Sep(
-                        linewidth = 0,
-                        padding = 6,
-                        foreground = colors[2],
-                        background = colors[0]
-                        ),
-               widget.GroupBox(font="Ubuntu Bold",
-                        fontsize = 9,
-                        margin_y = 0,
-                        margin_x = 0,
-                        padding_y = 5,
-                        padding_x = 5,
-                        borderwidth = 1,
-                        active = colors[2],
-                        inactive = colors[2],
-                        rounded = False,
-                        highlight_method = "block",
-                        this_current_screen_border = colors[5],
-                        this_screen_border = colors [1],
-                        other_current_screen_border = colors[0],
-                        other_screen_border = colors[0],
-                        foreground = colors[2],
-                        background = colors[0]
-                        ),
-               widget.Prompt(
-                        prompt=prompt,
-                        font="Hack Nerd Font",
-                        padding=10,
-                        foreground = colors[3],
-                        background = colors[1]
-                        ),
-               widget.Sep(
-                        linewidth = 0,
-                        padding = 10,
-                        foreground = colors[2],
-                        background = colors[0]
-                        ),
-               widget.WindowName(font="Ubuntu",
-                        fontsize = 11,
-                        foreground = colors[5],
-                        background = colors[0],
-                        padding = 5
-                        ),
-               widget.TextBox(
-                        text='',
-                        background = colors[0],
-                        foreground = colors[5],
-                        padding=0,
-                        fontsize=37
-                        ),
-               widget.TextBox(
-                        text=" ↯",
-                        foreground=colors[2],
-                        background=colors[5],
-                        padding = 0,
-                        fontsize=14
-                        ),
-               widget.Net(
-                        interface = "enp4s0",
-                        foreground = colors[2],
-                        background = colors[5],
-                        padding = 5
-                        ),
-               widget.TextBox(
-                        text='',
-                        background = colors[5],
-                        foreground = colors[7],
-                        padding=0,
-                        fontsize=37
-                        ),
-               widget.TextBox(
-                        font="Ubuntu Bold",
-                        text=" ☵",
-                        padding = 5,
-                        foreground=colors[2],
-                        background=colors[7],
-                        fontsize=14
-                        ),
-               widget.CurrentLayout(
-                        foreground = colors[2],
-                        background = colors[7],
-                        padding = 5
-                        ),
-               widget.TextBox(
-                        text='',
-                        background = colors[7],
-                        foreground = colors[5],
-                        padding=0,
-                        fontsize=37
-                        ),
-               widget.TextBox(
-                        font="Ubuntu Bold",
-                        text=" ⟳",
-                        padding = 5,
-                        foreground=colors[2],
-                        background=colors[5],
-                        fontsize=14
-                        ),
-               widget.Pacman(
-                        execute = "urxvtc",
-                        update_interval = 1800,
-                        foreground = colors[2],
-                        background = colors[5]
-                        ),
-               widget.TextBox(
-                        text="Updates",
-                        padding = 5,
-                        foreground=colors[2],
-                        background=colors[5]
-                        ),
-               widget.TextBox(
-                        text='',
-                        background = colors[5],
-                        foreground = colors[7],
-                        padding=0,
-                        fontsize=37
-                        ),
-               widget.TextBox(
-                        font="Ubuntu Bold",
-                        text=" ♫",
-                        padding = 5,
-                        foreground=colors[2],
-                        background=colors[7],
-                        fontsize=14
-                        ),
-               widget.Cmus(
-                        max_chars = 40,
-                        update_interval = 0.5,
-                        background=colors[7],
-                        play_color = colors[2],
-                        noplay_color = colors[2]
-                        ),
-               widget.TextBox(
-                        text='',
-                        background = colors[7],
-                        foreground = colors[5],
-                        padding=0,
-                        fontsize=37
-                        ),
-               widget.TextBox(
-                        font="Ubuntu Bold",
-                        text=" 🕒",
-                        foreground=colors[2],
-                        background=colors[5],
-                        padding = 5,
-                        fontsize=14
-                        ),
-               widget.Clock(
-                        foreground = colors[2],
-                        background = colors[5],
-                        format="%A, %B %d - %H:%M"
-                        ),
-               widget.Sep(
-                        linewidth = 0,
-                        padding = 5,
-                        foreground = colors[0],
-                        background = colors[5]
-                        ),
-               #widget.Systray(
-                        #background=colors[0],
-                        #padding = 5
-                        #),
-              ]
-    return widgets_list
-
-##### SCREENS ##### (TRIPLE MONITOR SETUP)
-
-def init_widgets_screen1():
-    widgets_screen1 = init_widgets_list()
-    return widgets_screen1                       # Slicing removes unwanted widgets on Monitors 1,3
-
-def init_widgets_screen2():
-    widgets_screen2 = init_widgets_list()
-    return widgets_screen2                       # Monitor 2 will display all widgets in widgets_list
-
-def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), opacity=0.95, size=20)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=0.95, size=20)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen1(), opacity=0.95, size=20))]
-
-##### FLOATING WINDOWS #####
-
-@hook.subscribe.client_new
-def floating(window):
-    floating_types = ['notification', 'toolbar', 'splash', 'dialog']
-    transient = window.window.get_wm_transient_for()
-    if window.window.get_wm_type() in floating_types or transient:
-        window.floating = True
-
-def init_mouse():
-    return [Drag([mod], "Button1", lazy.window.set_position_floating(),      # Move floating windows
-                 start=lazy.window.get_position()),
-            Drag([mod], "Button3", lazy.window.set_size_floating(),          # Resize floating windows
-                 start=lazy.window.get_size()),
-            Click([mod, "shift"], "Button1", lazy.window.bring_to_front())]  # Bring floating window to front
-
-##### DEFINING A FEW THINGS #####
-
-if __name__ in ["config", "__main__"]:
-    mod = "mod4"                                     # Sets mod key to SUPER/WINDOWS
-    myTerm = "konsole"                             # My terminal of choice
-    myConfig = "/home/tom/.config/qtile/config.py"    # Qtile config file location 
-
-    colors = init_colors()
-    keys = init_keys()
-    mouse = init_mouse()
-    group_names = init_group_names()
-    groups = init_groups()
-    floating_layout = init_floating_layout()
-    layout_theme = init_layout_theme()
-    border_args = init_border_args()
-    layouts = init_layouts()
-    screens = init_screens()
-    widget_defaults = init_widgets_defaults()
-    widgets_list = init_widgets_list()
-    widgets_screen1 = init_widgets_screen1()
-    widgets_screen2 = init_widgets_screen2()
-
-##### SETS GROUPS KEYBINDINGS #####
-
-for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))          # Switch to another group
-    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name)))   # Send current window to another group
-
-##### STARTUP APPLICATIONS #####
-
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
-
-##### NEEDED FOR SOME JAVA APPS #####
-
-#wmname = "LG3D"
-wmname = "qtile"
