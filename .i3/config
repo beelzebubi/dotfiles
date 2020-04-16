@@ -11,7 +11,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
-set $mod Mod4
+set $mod Mod4 
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
@@ -46,10 +46,10 @@ bindsym $mod+d exec --no-startup-id dmenu_recency
 
 # start rofi
 bindsym Mod1+space exec --no-startup-id rofi -show run
-bindsym $mod+Ctrl+Tab exec --no-startup-id rofi -show window
+bindsym Mod1+Ctrl+Tab exec --no-startup-id rofi -show window
 
 # rofi-bluetooth
-bindsym $mod+b exec --no-startup-id rofi-bluetooth
+bindsym $mod+Ctrl+b exec --no-startup-id rofi-bluetooth
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -75,7 +75,7 @@ bindsym Ctrl+XF86MonBrightnessDown exec "xbacklight -dec 25%; notify-send 'brigh
 # bindsym XF86MonBrightnessDown exec xbacklight -dec 2
 
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+Shift+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec pamac-manager
 bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec pcmanfm
@@ -140,7 +140,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -168,7 +168,7 @@ bindsym $mod+Ctrl+Left workspace prev
 #                 set $ws2 2:
 set $ws1 1:WWW
 set $ws2 2:DEV
-set $ws3 3:SYS
+set $ws3 3:CMD
 set $ws4 4:CHAT
 set $ws5 5:VBOX
 set $ws6 6:MUS
@@ -215,10 +215,10 @@ bindsym $mod+Shift+Ctrl+Left move container to workspace prev; workspace prev
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
 # assign [class="Alacritty"] 		$ws2
-assign [class="htop"]           $ws3
-assign [class="Telegram"]       $ws4
+assign [class="htop"]                   $ws3
+assign [class="Telegram"]               $ws4
 assign [class="whatsdesk"] 		$ws4
-assign [class="(?i)virtualbox"] $ws5
+assign [class="(?i)virtualbox"]         $ws5
 assign [class="Spotify"] 		$ws6
 assign [class="Viewnior"]		$ws8
 
@@ -239,7 +239,7 @@ for_window [class="Manjaro Settings Manager"] floating enable border normal
 for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
-# hhfor_window [class="octopi"] floating enable
+# for_window [class="octopi"] floating enable
 for_window [title="About Pale Moon"] floating enable
 for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
