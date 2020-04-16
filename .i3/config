@@ -69,6 +69,8 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 2%; notify-send 'brightness up'"
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 2%; notify-send 'brightness down'"
+bindsym Ctrl+XF86MonBrightnessUp exec "xbacklight -inc 25%; notify-send 'brightness up'"
+bindsym Ctrl+XF86MonBrightnessDown exec "xbacklight -dec 25%; notify-send 'brightness down'"
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 2"
 # bindsym XF86MonBrightnessDown exec xbacklight -dec 2
 

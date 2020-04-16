@@ -17,6 +17,7 @@ x-scheme-handler/mailto=userapp-Evolution-91KCH0.desktop
 message/rfc822=userapp-Thunderbird.desktop
 application/pdf=epdfview.desktop
 application/x-bittorrent=deluge.desktop
+x-scheme-handler/msteams=teams.desktop
 
 [Added Associations]
 x-scheme-handler/http=exo-web-browser.desktop;
