@@ -1,0 +1,58 @@
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# use vim as standard editor
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
+#------------------------------------------------------
+# Aliases
+#------------------------------------------------------
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../../'
+
+# use nvim if available
+if [ -x "$(command -v nvim)" ]; then
+    alias vim='nvim'
+fi
+
+#------------------------------------------------------
+# Autocompletion
+#------------------------------------------------------
+
+zmodload zsh/complist
+autoload -U compinit; compinit
+_comp_options+=(globdots)   # include hidden files
+setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
+
+
+# Use select menu for completions
+zstyle ':completion:*' menu select
+
+# Autocomplete options when completing a '-'
+zstyle ':completion:*' complete-options true
+
+# Style group names a little nicer
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}↓ %d %f'
+
+# Group completion results by type
+zstyle ':completion:*' group-name ''
+
+# Set up fzf for general auto-completion shenanigans, if it's installed
+FZF_CONFIG=~/.fzf.sh
+if [[ -x "$(command -v fzf)" ]] && [[ -f "$FZF_CONFIG" ]]; then
+  source "$FZF_CONFIG"
+fi
+
+#------------------------------------------------------
+# Additional tools (version managers, CLI tools, ...)
+#------------------------------------------------------
+
+# Prompt
+eval "$(starship init zsh)"
+
+
+

@@ -1,0 +1,7 @@
+# open terminal
+#shift + ctrl + alt + cmd - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
+shift + ctrl + alt + cmd - return : open -na ghostty --args --title=ghostty-from-vscode #--working-directory="$(pwd)"
+
+# run scripts
+shift + ctrl + alt + cmd - e : osascript /Users/tom/.script/open_home_folder.scpt
+

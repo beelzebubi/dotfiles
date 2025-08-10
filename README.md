@@ -24,11 +24,11 @@ Install GNU Stow _(if not already installed)_
     Fedora:   yum install stow
     Arch:     pacman -S stow
 
-Then simply use `stow` to install the dotfiles you want to use:
+Then simply use `stow --dotfile` to install the dotfiles you want to use:
 
     cd ~/.dotfiles
-    stow vim
-    stow tmux
+    stow vim --dotfile
+    stow tmux --dotfile
 
 ## Installing with homebrew
 
