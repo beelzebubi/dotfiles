@@ -1,4 +1,4 @@
-# .dotfiles
+# dotfiles
 dotfiles
 
 
@@ -13,7 +13,7 @@ Your first step is to clone this repository:
 
 Create symbolic links for the configurations you want to use, e.g.:
 
-    ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
+    ln -s ~/dotfiles/vim/.vimrc ~/.vimrc
 
 ### Using [GNU Stow](https://www.gnu.org/software/stow/) _(recommended)_
 
@@ -27,8 +27,8 @@ Install GNU Stow _(if not already installed)_
 Then simply use `stow --dotfile` to install the dotfiles you want to use:
 
     cd ~/.dotfiles
-    stow vim --dotfile
-    stow tmux --dotfile
+    stow -t ~ --dotfile ghostty nvim [...]
+
 
 ## Installing with homebrew
 
