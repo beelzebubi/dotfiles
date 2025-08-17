@@ -12,11 +12,18 @@ export EDITOR="$VISUAL"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
+alias dotfiles='cd ~/workspace/github.com/beelzebubi/dotfiles/'
 
 # use nvim if available
 if [ -x "$(command -v nvim)" ]; then
     alias vim='nvim'
 fi
+
+#------------------------------------------------------
+# Zsh plugins
+#------------------------------------------------------
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 #------------------------------------------------------
 # Autocompletion
@@ -27,7 +34,6 @@ autoload -U compinit; compinit
 _comp_options+=(globdots)   # include hidden files
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
-
 
 # Use select menu for completions
 zstyle ':completion:*' menu select
