@@ -1,19 +1,21 @@
+add_newline = false
+
 format = """
 $os\
 $username\
 $hostname\
 $directory\
+$character"""
+
+right_format = """
 $git_branch\
 $git_state\
 $git_status\
 $python\
-$golang\
-$character"""
-
-add_newline = false
+$golang"""
 
 [username]
-show_always = true
+show_always = false
 disabled = false
 
 [directory]
@@ -72,6 +74,7 @@ symbol = " "
 symbol = "  "
 
 [git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
 symbol = " "
 
 [git_commit]
@@ -201,6 +204,7 @@ symbol = " "
 symbol = "󰏗 "
 
 [python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 symbol = " "
 
 [rlang]
