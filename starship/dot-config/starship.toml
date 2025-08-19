@@ -85,13 +85,24 @@ format = '[\($state( $progress_current of $progress_total)\)]($style) '
 cherry_pick = '[🍒 PICKING](bold red)'
 
 [git_status]
-#format = '([\[$conflicted $stashed $deleted $renamed $modified $typechanged $staged $untracked $ahead_behind\]]($style) )'
-conflicted = '=${count}'
-untracked = '?${count}'
-modified = '!${count}'
-staged = '+${count}'
-renamed = '»${count}'
-deleted = '✘${count}'
+# #format = "([\[$conflicted $stashed $deleted $renamed $modified $typechanged $staged $untracked $ahead_behind\]]($style) )"
+# conflicted = "={count}"
+# untracked = "?${count}"
+# modified = "${count}"
+# staged = "${count}"
+# renamed = "»{count}"
+# deleted = "${count}"
+format = "[$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind]($style)"
+conflicted = "[ ](bold)  ${count} "
+staged = " ${count} "
+modified = "${count} "
+renamed = " ${count} "
+deleted = " ${count} "
+untracked = "?${count} "
+stashed = " ${count} "
+ahead = " ${count} "
+behind = " ${count} "
+diverged = "  נּ  ${ahead_count}  ${behind_count} "
 
 [golang]
 symbol = " "
