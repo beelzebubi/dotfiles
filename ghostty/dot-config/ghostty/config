@@ -1,2 +1,10 @@
 theme = dark:rose-pine,light:rose-pine-dawn
-font-size = 16
+font-size = 14
+font-family = "Hack Nerd Font Mono Regular"
+
+# keybindings
+keybind = ctrl+plus=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+
+# splits
+unfocused-split-opacity = 0.95
