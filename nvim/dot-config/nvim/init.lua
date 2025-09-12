@@ -219,6 +219,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- WARN: Overwrite builtin keymap K for hovering tooltip
+vim.keymap.set('n', 'K', function()
+  vim.lsp.buf.hover { border = 'rounded' }
+end)
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -851,7 +856,14 @@ require('lazy').setup({
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = {
+          auto_show = false,
+          auto_show_delay_ms = 500,
+          window = { border = 'single' },
+        },
+        menu = {
+          border = 'single',
+        },
       },
 
       sources = {
@@ -873,7 +885,7 @@ require('lazy').setup({
       fuzzy = { implementation = 'lua' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
+      signature = { enabled = true, window = { border = 'single' } },
     },
   },
 
