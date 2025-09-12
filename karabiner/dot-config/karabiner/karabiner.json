@@ -15,7 +15,7 @@
                                 "to": [
                                     {
                                         "key_code": "left_shift",
-                                        "modifiers": ["left_command", "left_control", "left_option"]
+                                        "modifiers": ["left_command", "left_control", "left_option", "left_shift"]
                                     }
                                 ],
                                 "type": "basic"
@@ -31,7 +31,17 @@
                         "product_id": 833,
                         "vendor_id": 1452
                     },
-                    "manipulate_caps_lock_led": false
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
                 },
                 {
                     "identifiers": {
