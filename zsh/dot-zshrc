@@ -14,8 +14,10 @@ export EDITOR="$VISUAL"
 
 alias ..='cd ..'
 alias ...='cd ../..'
-alias ....='cd ../../../'
+alias ....='cd ../../..'
 alias dotfiles='cd ~/workspace/github.com/beelzebubi/dotfiles/'
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lt='eza --tree --level=2 --long --icons --git'
 
 # use nvim if available
 if [ -x "$(command -v nvim)" ]; then
@@ -61,7 +63,9 @@ fi
 #------------------------------------------------------
 
 # Prompt
-eval "$(starship init zsh)"
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
 
 
 
