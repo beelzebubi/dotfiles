@@ -18,6 +18,10 @@ $golang"""
 show_always = false
 disabled = false
 
+[character]
+error_symbol = "[✗](bold cyan)"
+success_symbol = "[❯](bold cyan)"
+
 [directory]
 truncation_length = 4
 truncation_symbol = "../"
