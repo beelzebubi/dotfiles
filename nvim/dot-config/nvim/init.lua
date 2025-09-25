@@ -929,7 +929,7 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: missing-fields
       require('rose-pine').setup {
         variant = 'auto',
-        dark_variant = 'main',
+        dark_variant = 'moon',
         disable_background = false,
         disable_float_backgrond = false,
         disable_italics = false,
@@ -939,6 +939,24 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'rose-pine'
+    end,
+  },
+
+  {
+    'EdenEast/nightfox.nvim',
+    name = 'nightfox',
+    priority = 999,
+    config = function()
+      ---@diagnostic disable-next-line: missing-fields
+      require('nightfox').setup {
+        colorblind = {
+          enable = true,
+          severity = {
+            protan = 0.6,
+            deutan = 1.0,
+          },
+        },
+      }
     end,
   },
 
