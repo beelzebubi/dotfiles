@@ -1,6 +1,19 @@
-theme = dark:rose-pine,light:rose-pine-dawn
+# theme
+theme = dark:Rose Pine,light:Rose Pine Dawn
+
+# font
 font-size = 14
 font-family = "Hack Nerd Font Mono Regular"
+font-style = Regular
+
+# window
+window-padding-x = 14
+window-padding-y = 14
+
+# cursor stlying
+cursor-style = "block"
+cursor-style-blink = false
+shell-integration-features = no-cursor
 
 # keybindings
 keybind = ctrl+plus=increase_font_size:1
