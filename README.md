@@ -7,7 +7,7 @@ Installation
 
 Your first step is to clone this repository:
 
-    git clone https://github.com/beelzebubi/.dotfiles.git ~/.dotfiles
+    git clone https://github.com/beelzebubi/dotfiles.git ~/dotfiles
 
 ### Manual Installation
 
@@ -26,7 +26,7 @@ Install GNU Stow _(if not already installed)_
 
 Then simply use `stow --dotfile` to install the dotfiles you want to use:
 
-    cd ~/.dotfiles
+    cd ~/dotfiles
     stow -t ~ --dotfile ghostty nvim [...]
 
 
