@@ -42,6 +42,9 @@ return {
         state.floating = open_centered_float { buf = state.floating.buf }
         if vim.bo[state.floating.buf].buftype ~= 'terminal' then
           vim.cmd.terminal()
+          vim.api.nvim_feedkeys('i', 'n', false)
+        else
+          vim.api.nvim_feedkeys('i', 'n', false)
         end
       else
         vim.api.nvim_win_hide(state.floating.win)
