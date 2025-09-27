@@ -708,6 +708,12 @@ require('lazy').setup({
             },
           },
         },
+        sqls = {
+          on_attach = function(client, _)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end,
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -750,6 +756,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'pgformatter',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -802,11 +809,25 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        python = { 'ruff' },
+        sql = { 'pg_format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      -- Custom formatter Konfiguration
+      -- Ziel: pg_formatter soll keine von dir manuell gesetzten Leerzeilen zwischen Blöcken "wegoptimieren".
+      --  * --keep-newline bewahrt leere Zeilen (primär für PL/pgSQL, hilft häufig auch bei reinen SQL-Skripten, um aggressives Zusammenziehen zu reduzieren)
+      --  * Falls weiterhin gewünschte Leerzeilen verschwinden, sag Bescheid – dann könnten wir alternativ einen Wrapper schreiben,
+      --    der Originaltext-Leerzeilen nachträglich rein-mergt.
+      formatters = {
+        pg_format = {
+          -- Built-in Formatter Name: pg_format (Conform builtin)
+          -- Zusatzargument zum Bewahren leerer Zeilen
+          prepend_args = { '--keep-newline' },
+        },
       },
     },
   },
