@@ -9,6 +9,21 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 #------------------------------------------------------
+# Init other tools
+#------------------------------------------------------
+
+# Set up fzf for general auto-completion shenanigans, if it's installed
+FZF_CONFIG=~/.fzf.sh
+if [[ -x "$(command -v fzf)" ]] && [[ -f "$FZF_CONFIG" ]]; then
+  source "$FZF_CONFIG"
+fi
+
+# Set up zoxide for better cd
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+#------------------------------------------------------
 # Aliases
 #------------------------------------------------------
 
@@ -18,6 +33,18 @@ alias ....='cd ../../..'
 alias dotfiles='cd ~/workspace/github.com/beelzebubi/dotfiles/'
 alias ls='eza -lh --group-directories-first --icons=auto'
 alias lt='eza --tree --level=2 --long --icons --git'
+
+# use zoxide instead of cd
+alias cd="zd"
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
 
 # use nvim if available
 if [ -x "$(command -v nvim)" ]; then
@@ -51,12 +78,6 @@ zstyle ':completion:*:*:*:*:descriptions' format '%F{green}↓ %d %f'
 
 # Group completion results by type
 zstyle ':completion:*' group-name ''
-
-# Set up fzf for general auto-completion shenanigans, if it's installed
-FZF_CONFIG=~/.fzf.sh
-if [[ -x "$(command -v fzf)" ]] && [[ -f "$FZF_CONFIG" ]]; then
-  source "$FZF_CONFIG"
-fi
 
 #------------------------------------------------------
 # Additional tools (version managers, CLI tools, ...)
