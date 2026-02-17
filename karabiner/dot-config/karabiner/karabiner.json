@@ -5,6 +5,27 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Caps Lock as Mod-Tap: tap = backspace, hold = MEH",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
+                                "to_if_alone": [{ "key_code": "delete_or_backspace" }],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": ["left_command", "left_control", "left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": "Change caps_lock to command+control+option+shift.",
