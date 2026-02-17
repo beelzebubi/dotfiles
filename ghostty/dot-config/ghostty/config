@@ -2,13 +2,14 @@
 theme = dark:Rose Pine,light:Rose Pine Dawn
 
 # font
-font-size = 14
-font-family = "Hack Nerd Font Mono Regular"
+# font-size = 14
+# font-family = "Hack Nerd Font Mono"
 font-style = Regular
 
 # window
-window-padding-x = 14
-window-padding-y = 14
+window-padding-x = 5
+window-padding-y = 5
+window-padding-color = extend-always
 
 # cursor stlying
 cursor-style = "block"
