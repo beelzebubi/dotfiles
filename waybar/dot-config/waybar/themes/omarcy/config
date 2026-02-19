@@ -48,11 +48,10 @@
     "modules-right": [
         "custom/updates",
         "pulseaudio",
-        "bluetooth",
         "network",
+        "bluetooth",
         "cpu",
-        "custom/hypridle",
         "battery",
-        "custom/exit"
+        "custom/hypridle",
     ]
 }
