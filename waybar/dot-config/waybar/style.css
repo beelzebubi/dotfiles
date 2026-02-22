@@ -66,8 +66,10 @@ tooltip {
 #network,
 #battery,
 #custom-exit,
+#custom-updates,
 #custom-openwebui,
 #custom-brightness,
+#custom-filemanager,
 #custom-hypridle {
     background: alpha(@background, 0.75);
     border-radius: 16px;
