@@ -45,7 +45,7 @@
     "max-length": 50
   },
   "clock": {
-    "format": "{:%A %H:%M}",
+    "format": "{:L%a. %d. L%b.  %H:%M}",
     "format-alt": "{:%d %B %Y}",
     "tooltip": false
   },
