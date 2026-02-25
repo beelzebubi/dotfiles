@@ -51,6 +51,7 @@
         "bluetooth",
         "network",
         "cpu",
+        "memory",
         "custom/hypridle",
         "battery",
         "custom/exit"

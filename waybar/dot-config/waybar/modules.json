@@ -16,7 +16,7 @@
     }
   },
   "custom/updates": {
-    "format": "{icon} {0}",
+    "format": "{icon}   {0}",
     "return-type": "json",
     "format-icons": {
         "has-updates": "󱍷",
@@ -45,14 +45,18 @@
     "max-length": 50
   },
   "clock": {
-    "format": "{:L%a. %d. L%b.  %H:%M}",
+    "format": "{:L%a. %d. %b.  %H:%M}",
     "format-alt": "{:%d %B %Y}",
     "tooltip": false
   },
   "cpu": {
     "interval": 5,
-    "format": "",
+    "format": "{usage}%  ",
     "on-click": "ghostty -e btop"
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{}% "
   },
   "pulseaudio": {
     "scroll-step": 1,
@@ -79,13 +83,14 @@
     ],
     "format": "{icon}",
     "format-wifi": "{icon}",
-    "format-ethernet": "󰀂",
+    "format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}   󰀂",
     "format-disconnected": "󰤮",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
-    "interval": 3,
+    "interval": 5,
     "spacing": 1,
+    "max-length": 50,
     "on-click": "ghostty --class=local.floating -e impala"
   },
   "battery": {
