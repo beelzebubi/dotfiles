@@ -1,0 +1,113 @@
+# System & Security
+gnome-keyring
+openssh
+polkit-gnome
+ufw
+usbutils
+
+# Terminal & Shell
+bat
+bc
+btop
+eza
+fastfetch
+fd
+fzf
+ghostty
+jq
+pv
+ripgrep
+starship
+zoxide
+zsh
+
+# Development
+git
+lazygit
+neovim
+code #vscode
+
+# Browsers
+brave-bin
+zen-browser-bin
+
+# Hyprland
+hyprcursor
+hyprgraphics
+hypridle
+hyprland
+hyprland-guiutils
+hyprlang
+hyprlock
+hyprpaper
+hyprpicker
+hyprpolkitagent
+hyprtoolkit
+hyprutils
+hyprwayland-scanner
+xdg-desktop-portal-hyprland
+
+# Wayland UI & Utilities
+grim
+slurp
+impala
+wiremix
+rofi-wayland
+walker
+waybar
+waybar-module-pacman-updates-git
+
+# Audio
+pamixer
+wiremix
+
+# Bluetooth & Network
+bluez
+bluez-libs
+bluez-utils
+bluetui
+
+# File Management & Desktop
+gvfs-dnssd
+dolphin
+rsync
+unzip
+
+# System Utilities
+pacman-contrib
+plocate
+power-profiles-daemon
+arch-update-check
+
+# Appearance
+bibata-cursor-theme
+gnome-themes-extra
+noto-fonts
+noto-fonts-emoji
+otf-font-awesome
+ttf-cascadia-mono-nerd
+ttf-jetbrains-mono-nerd
+yaru-icon-theme
+
+# Applications
+stow
+
+# Languages
+go
+rust
+python
+ruff
+npm
+
+# Elephant Suite
+elephant
+elephant-calc
+elephant-clipboard
+elephant-desktopapplications
+elephant-files
+elephant-menus
+elephant-providerlist
+elephant-symbols
+elephant-todo
+
+
