@@ -13,17 +13,9 @@
   background: none;
   margin: 0;
   padding: 0;
-
-  /* 
-  background-color: @background;
-  color: @foreground;
-  border: none;
-  border-radius: 10px;
-  */
 }
 
 window#waybar {
-  /* background-color: alpha(@background, 0.9); */
   background: transparent;
 }
 
@@ -31,17 +23,18 @@ tooltip {
   color: @foreground;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 12px;
-  /* background-color: alpha(@background, 0.9);
-  padding: 20px;
-  margin: 0px; */
 }
 
 .modules-left {
-  margin: 8px 0px 8px 10px;
+  margin: 10px 0px 10px 10px;
+}
+
+.modules-center {
+  margin: 10px 0px 10px 0px;
 }
 
 .modules-right {
-  margin: 8px 10px 8px 0px;
+  margin: 10px 10px 10px 0px;
 }
 
 #workspaces button {
@@ -61,10 +54,13 @@ tooltip {
 #clock,
 #workspaces,
 #cpu,
+#memory,
 #bluetooth,
 #pulseaudio,
+#wireplumber,
 #network,
 #battery,
+#tray,
 #custom-exit,
 #custom-updates,
 #custom-openwebui,
@@ -73,8 +69,8 @@ tooltip {
 #custom-hypridle {
     background: alpha(@background, 0.75);
     border-radius: 16px;
-    padding: 3px 12px;
-    margin: 0px;
+    padding: 3px 15px;
+    margin: 2px;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 

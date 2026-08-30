@@ -73,6 +73,19 @@
       ]
     }
   },
+  "wireplumber": {
+      "format": "{icon}",
+      "format-bluetooth": "󰂰",
+      "nospacing": 1,
+      "tooltip-format": "Volume : {volume}%",
+      "format-muted": "󰝟",
+      "format-icons": {
+          "headphone": "",
+          "default": ["󰖀","󰕾",""]
+      },
+      "on-click": "pamixer -t",
+      "scroll-step": 1
+  },
   "network": {
     "format-icons": [
       "󰤯",
