@@ -7,7 +7,7 @@ Packages are split by operating system:
 | Directory | Contents |
 | --------- | -------- |
 | `common/` | Works on every OS: `bash`, `fzf`, `ghostty`, `nvim`, `ruff`, `starship`, `zed`, `zsh` |
-| `linux/`  | Arch Linux + Hyprland/Wayland: `hypr`, `mako`, `rofi`, `walker`, `waybar`, `wlogout` |
+| `linux/`  | Arch Linux + Hyprland/Wayland: `hypr`, `quickshell`, `rofi`, `walker`, `waybar`, `wlogout` |
 | `macos/`  | macOS: `aerospace`, `karabiner`, `sketchybar`, `skhd`, `zsh-macos` |
 | `install/` | Installer support: `lib/helpers.sh`, `linux/pkgs.txt` (pacman/yay), `macos/Brewfile` |
 
@@ -17,6 +17,39 @@ macOS. Where a shared tool needs an OS-specific add-on, that add-on gets its
 own package next to the shared one: `macos/zsh-macos` only ships the
 `.zprofile` that puts Homebrew on `PATH`, while `common/zsh` holds the
 `.zshrc` and the plugin submodules used by both systems.
+
+Quickshell
+----------
+
+`linux/quickshell` is the notification daemon and the quick settings panels.
+It replaces `mako`, and the `ghostty -e <tui>` launchers that used to hang off
+the waybar modules. The bar itself is still waybar.
+
+    ~/.config/quickshell/
+    ├── shell.qml                     entry point
+    ├── Theme.qml                     Rosé Pine Moon tokens
+    ├── services/Notifs.qml           notification server, history, DND
+    ├── services/Panels.qml           which panel is open
+    ├── modules/notifications/        popups + history center
+    ├── modules/panels/               audio and bluetooth panels
+    └── widgets/                      shared slider and button
+
+Everything is driven over IPC, because waybar is a separate process:
+
+| Trigger | Command |
+| ------- | ------- |
+| waybar audio module | `qs ipc call panels toggle audio` |
+| waybar bluetooth module | `qs ipc call panels toggle bluetooth` |
+| `SUPER ALT CTRL SHIFT + N` | `qs ipc call notifs toggleCenter` |
+| `SUPER SHIFT + N` | `qs ipc call notifs toggleDnd` |
+
+The TUIs stay installed as a fallback for what the panels do not cover
+(per-stream routing, codecs, pairing edge cases): middle click the audio module
+for `wiremix`, right click the bluetooth module for `bluetui`.
+
+`org.freedesktop.Notifications` can only be owned by one process. `install.sh`
+masks `mako.service` if mako is still installed, otherwise dbus can activate it
+and one of the two loses the name.
 
 Installation
 ------------

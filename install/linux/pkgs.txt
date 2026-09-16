@@ -52,6 +52,7 @@ grim
 slurp
 impala
 wiremix
+quickshell
 rofi-wayland
 walker
 waybar
@@ -59,7 +60,6 @@ waybar-module-pacman-updates-git
 
 # Audio
 pamixer
-wiremix
 
 # Bluetooth & Network
 bluez
