@@ -2,20 +2,20 @@ pragma Singleton
 
 import Quickshell
 
-// Rosé Pine Moon. Same palette the old mako.ini and rofi's rose-pine-moon.rasi
-// used, so notifications keep the look they had before the migration.
+// Rosé Pine, matching waybar/themes/rose-pine.css - the theme style.css
+// actually imports - so bar and shell share one palette.
 Singleton {
-    readonly property color base: "#232136"
-    readonly property color surface: "#2a273f"
-    readonly property color overlay: "#393552"
+    readonly property color base: "#191724"
+    readonly property color surface: "#1f1d2e"
+    readonly property color overlay: "#26233a"
     readonly property color muted: "#6e6a86"
     readonly property color subtle: "#908caa"
     readonly property color text: "#e0def4"
 
     readonly property color love: "#eb6f92"
     readonly property color gold: "#f6c177"
-    readonly property color rose: "#ea9a97"
-    readonly property color pine: "#3e8fb0"
+    readonly property color rose: "#ebbcba"
+    readonly property color pine: "#31748f"
     readonly property color foam: "#9ccfd8"
     readonly property color iris: "#c4a7e7"
 
@@ -24,7 +24,7 @@ Singleton {
     readonly property int fontSize: 12
     readonly property int fontSizeSmall: 10
 
-    // Carried over from mako.ini one to one.
+    // Geometry carried over from mako.ini one to one.
     readonly property int popupWidth: 420
     readonly property int screenMargin: 20
     readonly property int padding: 10

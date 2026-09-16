@@ -27,7 +27,7 @@ the waybar modules. The bar itself is still waybar.
 
     ~/.config/quickshell/
     ├── shell.qml                     entry point
-    ├── Theme.qml                     Rosé Pine Moon tokens
+    ├── Theme.qml                     Rosé Pine tokens, same as waybar
     ├── services/Notifs.qml           notification server, history, DND
     ├── services/Panels.qml           which panel is open
     ├── modules/notifications/        popups + history center
