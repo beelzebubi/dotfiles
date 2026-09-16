@@ -16,7 +16,7 @@ source "$DOTFILES_DIR/install/lib/helpers.sh"
 # Stow packages shared by every OS -> common/
 STOW_COMMON=(bash fzf ghostty nvim ruff starship zed zsh)
 # Arch Linux, Hyprland/Wayland stack -> linux/
-STOW_LINUX=(hypr mako rofi walker waybar wlogout)
+STOW_LINUX=(hypr quickshell rofi walker waybar wlogout)
 # aerospace/skhd window management + karabiner + sketchybar -> macos/
 # zsh-macos adds the macOS-only .zprofile on top of the shared zsh package.
 STOW_MACOS=(aerospace karabiner sketchybar skhd zsh-macos)
@@ -74,6 +74,45 @@ ensure_yay() {
   (cd "$tmp_dir" && makepkg -si --noconfirm)
   rm -rf "$tmp_dir"
   log_success "yay installed"
+}
+
+# org.freedesktop.Notifications can only be held by one process. quickshell
+# claims it now, but dbus will happily activate a still-installed mako and one
+# of the two will lose the name, so take mako out of the running first.
+disable_mako() {
+  command_exists mako || return 0
+  log_step "Disabling mako (quickshell is the notification daemon now)"
+
+  if systemctl --user mask mako.service &>/dev/null; then
+    log_success "masked mako.service"
+  else
+    log_warn "could not mask mako.service - remove mako manually if notifications misbehave"
+  fi
+
+  pkill -x mako &>/dev/null || true
+}
+
+# quickshell's network panel talks to NetworkManager, which this setup did not
+# run before (it used bare iwd via impala). Put NetworkManager in front but let
+# it keep using iwd as its wifi backend, so the known networks already stored
+# under /var/lib/iwd are not lost.
+setup_networkmanager() {
+  command_exists nmcli || return 0
+  log_step "Configuring NetworkManager (iwd stays the wifi backend)"
+
+  local conf_dir="/etc/NetworkManager/conf.d"
+  local conf_src="$DOTFILES_DIR/install/linux/networkmanager/wifi-backend-iwd.conf"
+
+  sudo install -Dm644 "$conf_src" "$conf_dir/wifi-backend-iwd.conf"
+  log_success "$conf_dir/wifi-backend-iwd.conf"
+
+  # iwd must keep running - NetworkManager drives it.
+  sudo systemctl enable --now iwd.service &>/dev/null || true
+  if sudo systemctl enable --now NetworkManager.service; then
+    log_success "NetworkManager enabled"
+  else
+    log_error "could not enable NetworkManager - the network panel will stay empty"
+  fi
 }
 
 install_arch_packages() {
@@ -232,6 +271,8 @@ main() {
       sudo -v
       ensure_yay
       install_arch_packages
+      setup_networkmanager
+      disable_mako
       ;;
     macos)
       ensure_homebrew

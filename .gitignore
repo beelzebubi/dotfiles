@@ -3,3 +3,6 @@
 # Karabiner backups
 macos/karabiner/dot-config/karabiner/automatic_backups/karabiner_*.json
 
+
+# Quickshell generates this per machine
+linux/quickshell/dot-config/quickshell/.qmlls.ini

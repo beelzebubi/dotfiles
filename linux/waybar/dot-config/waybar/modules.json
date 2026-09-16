@@ -61,7 +61,8 @@
   "pulseaudio": {
     "scroll-step": 1,
     "format": "{icon}",
-    "on-click": "ghostty --class=local.wiremix -e wiremix",
+    "on-click": "qs ipc call panels toggle audio",
+    "on-click-middle": "ghostty --class=local.wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "format-muted": "",
@@ -104,7 +105,8 @@
     "interval": 5,
     "spacing": 1,
     "max-length": 50,
-    "on-click": "ghostty --class=local.floating -e impala"
+    "on-click": "qs ipc call panels toggle network",
+    "on-click-right": "ghostty --class=local.floating -e nmtui"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -152,7 +154,8 @@
     "format-disabled": "󰂲",
     "format-connected": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "ghostty --class=local.bluetui -e bluetui"
+    "on-click": "qs ipc call panels toggle bluetooth",
+    "on-click-right": "ghostty --class=local.bluetui -e bluetui"
   },
   "custom/brightness": {
     "format": "",

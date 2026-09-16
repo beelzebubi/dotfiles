@@ -50,8 +50,8 @@ xdg-desktop-portal-hyprland
 # Wayland UI & Utilities
 grim
 slurp
-impala
 wiremix
+quickshell
 rofi-wayland
 walker
 waybar
@@ -59,13 +59,13 @@ waybar-module-pacman-updates-git
 
 # Audio
 pamixer
-wiremix
 
 # Bluetooth & Network
 bluez
 bluez-libs
 bluez-utils
 bluetui
+networkmanager
 
 # File Management & Desktop
 gvfs-dnssd
