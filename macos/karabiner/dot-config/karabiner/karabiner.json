@@ -12,7 +12,7 @@
                                     "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 100 },
                                 "to_if_alone": [{ "key_code": "delete_or_backspace" }],
                                 "to_if_held_down": [
                                     {
