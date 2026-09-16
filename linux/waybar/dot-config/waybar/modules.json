@@ -105,7 +105,8 @@
     "interval": 5,
     "spacing": 1,
     "max-length": 50,
-    "on-click": "ghostty --class=local.floating -e impala"
+    "on-click": "qs ipc call panels toggle network",
+    "on-click-right": "ghostty --class=local.floating -e nmtui"
   },
   "battery": {
     "format": "{capacity}% {icon}",

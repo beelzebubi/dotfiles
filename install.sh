@@ -92,6 +92,29 @@ disable_mako() {
   pkill -x mako &>/dev/null || true
 }
 
+# quickshell's network panel talks to NetworkManager, which this setup did not
+# run before (it used bare iwd via impala). Put NetworkManager in front but let
+# it keep using iwd as its wifi backend, so the known networks already stored
+# under /var/lib/iwd are not lost.
+setup_networkmanager() {
+  command_exists nmcli || return 0
+  log_step "Configuring NetworkManager (iwd stays the wifi backend)"
+
+  local conf_dir="/etc/NetworkManager/conf.d"
+  local conf_src="$DOTFILES_DIR/install/linux/networkmanager/wifi-backend-iwd.conf"
+
+  sudo install -Dm644 "$conf_src" "$conf_dir/wifi-backend-iwd.conf"
+  log_success "$conf_dir/wifi-backend-iwd.conf"
+
+  # iwd must keep running - NetworkManager drives it.
+  sudo systemctl enable --now iwd.service &>/dev/null || true
+  if sudo systemctl enable --now NetworkManager.service; then
+    log_success "NetworkManager enabled"
+  else
+    log_error "could not enable NetworkManager - the network panel will stay empty"
+  fi
+}
+
 install_arch_packages() {
   local pkgs_file="$DOTFILES_DIR/install/linux/pkgs.txt"
   log_step "Installing packages from install/linux/pkgs.txt"
@@ -248,6 +271,7 @@ main() {
       sudo -v
       ensure_yay
       install_arch_packages
+      setup_networkmanager
       disable_mako
       ;;
     macos)

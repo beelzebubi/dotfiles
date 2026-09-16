@@ -10,5 +10,6 @@ ShellRoot {
     Center {}
 
     AudioPanel {}
+    NetworkPanel {}
     BluetoothPanel {}
 }
