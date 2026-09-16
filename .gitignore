@@ -1,5 +1,5 @@
 .DS_Store
 
 # Karabiner backups
-karabiner/dot-config/karabiner/automatic_backups/karabiner_*.json
+macos/karabiner/dot-config/karabiner/automatic_backups/karabiner_*.json
 
