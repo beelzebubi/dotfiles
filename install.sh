@@ -1,20 +1,28 @@
 #!/usr/bin/env bash
 # Dotfiles installer: detects the OS, installs the required packages and
 # links the dotfiles into place with GNU Stow.
+#
+# Repository layout:
+#   common/   stow packages that work on every OS (zsh, ghostty, nvim, ...)
+#   linux/    Arch + Hyprland/Wayland only
+#   macos/    macOS only
+#   install/  package lists (install/linux/pkgs.txt, install/macos/Brewfile)
 set -euo pipefail
 
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 source "$DOTFILES_DIR/install/lib/helpers.sh"
 
-# Stow packages shared by every OS.
+# Stow packages shared by every OS -> common/
 STOW_COMMON=(bash fzf ghostty nvim ruff starship zed zsh)
-# Current Hyprland/Wayland stack.
-STOW_LINUX=(hypr waybar rofi walker mako wlogout)
-# aerospace/skhd window management + karabiner + sketchybar.
-STOW_MACOS=(aerospace karabiner sketchybar skhd)
+# Arch Linux, Hyprland/Wayland stack -> linux/
+STOW_LINUX=(hypr mako rofi walker waybar wlogout)
+# aerospace/skhd window management + karabiner + sketchybar -> macos/
+# zsh-macos adds the macOS-only .zprofile on top of the shared zsh package.
+STOW_MACOS=(aerospace karabiner sketchybar skhd zsh-macos)
 
 OS=""
+OS_STOW_DIR=""
 OS_STOW_PACKAGES=()
 BACKUP_DIR=""
 
@@ -28,10 +36,12 @@ detect_os() {
         exit 1
       fi
       OS="linux"
+      OS_STOW_DIR="$DOTFILES_DIR/linux"
       OS_STOW_PACKAGES=("${STOW_LINUX[@]}")
       ;;
     Darwin)
       OS="macos"
+      OS_STOW_DIR="$DOTFILES_DIR/macos"
       OS_STOW_PACKAGES=("${STOW_MACOS[@]}")
       ;;
     *)
@@ -67,8 +77,8 @@ ensure_yay() {
 }
 
 install_arch_packages() {
-  log_step "Installing packages from install/pkgs.txt"
-  local pkgs_file="$DOTFILES_DIR/install/pkgs.txt"
+  local pkgs_file="$DOTFILES_DIR/install/linux/pkgs.txt"
+  log_step "Installing packages from install/linux/pkgs.txt"
   local failed=()
   local line pkg
 
@@ -113,8 +123,8 @@ ensure_homebrew() {
 }
 
 install_macos_packages() {
-  log_step "Installing packages via brew bundle"
-  brew bundle --file="$DOTFILES_DIR/brew/Brewfile"
+  log_step "Installing packages from install/macos/Brewfile"
+  brew bundle --file="$DOTFILES_DIR/install/macos/Brewfile"
 }
 
 # --- Stow ------------------------------------------------------------------
@@ -141,9 +151,9 @@ backup_conflict() {
 # Dry-runs stow for a package and backs up any real files that would
 # conflict with the symlinks stow wants to create.
 resolve_conflicts() {
-  local pkg="$1"
+  local stow_dir="$1" pkg="$2"
   local dry_output rel
-  dry_output="$(stow -d "$DOTFILES_DIR" -t "$HOME" --dotfile -n -v "$pkg" 2>&1)" || true
+  dry_output="$(stow -d "$stow_dir" -t "$HOME" --dotfile -n -v "$pkg" 2>&1)" || true
 
   while IFS= read -r rel; do
     [[ -n "$rel" ]] && backup_conflict "$rel"
@@ -151,30 +161,48 @@ resolve_conflicts() {
 }
 
 stow_package() {
-  local pkg="$1"
-  if [[ ! -d "$DOTFILES_DIR/$pkg" ]]; then
-    log_warn "skipping $pkg (no such directory)"
+  local stow_dir="$1" pkg="$2"
+  local label
+  label="$(basename "$stow_dir")/$pkg"
+
+  if [[ ! -d "$stow_dir/$pkg" ]]; then
+    log_warn "skipping $label (no such directory)"
     return 1
   fi
 
-  resolve_conflicts "$pkg"
+  resolve_conflicts "$stow_dir" "$pkg"
 
-  if stow -d "$DOTFILES_DIR" -t "$HOME" --dotfile -R "$pkg"; then
-    log_success "$pkg"
+  if stow -d "$stow_dir" -t "$HOME" --dotfile -R "$pkg"; then
+    log_success "$label"
   else
-    log_error "failed to stow: $pkg"
+    log_error "failed to stow: $label"
     return 1
   fi
 }
 
+# Directories that packages from more than one stow dir write into.
+# If ~/.config does not exist yet, stow "folds" it into a symlink pointing at
+# the first package's dot-config. A later stow run from a *different* stow dir
+# (common/ vs linux/ vs macos/) does not recognise that symlink as its own and
+# aborts with a conflict. Creating the directory up front keeps stow linking
+# per-package subdirectories instead.
+ensure_shared_target_dirs() {
+  mkdir -p "$HOME/.config"
+}
+
 install_dotfiles() {
   log_step "Linking dotfiles with GNU Stow"
-  local packages=("${STOW_COMMON[@]}" "${OS_STOW_PACKAGES[@]}")
   local failed=()
   local pkg
 
-  for pkg in "${packages[@]}"; do
-    stow_package "$pkg" || failed+=("$pkg")
+  ensure_shared_target_dirs
+
+  for pkg in "${STOW_COMMON[@]}"; do
+    stow_package "$DOTFILES_DIR/common" "$pkg" || failed+=("common/$pkg")
+  done
+
+  for pkg in "${OS_STOW_PACKAGES[@]}"; do
+    stow_package "$OS_STOW_DIR" "$pkg" || failed+=("$OS/$pkg")
   done
 
   if ((${#failed[@]})); then

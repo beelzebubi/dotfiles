@@ -1,0 +1,5 @@
+# macOS-only zsh login shell setup.
+# The shared, cross-platform zsh config lives in common/zsh.
+
+# Homebrew (Apple Silicon prefix).
+export PATH="/opt/homebrew/bin:$PATH"
