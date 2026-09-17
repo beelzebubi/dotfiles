@@ -230,6 +230,57 @@ install_macos_packages() {
   brew bundle --file="$DOTFILES_DIR/install/macos/Brewfile"
 }
 
+# --- Login shell -----------------------------------------------------------
+
+# The passwd entry, not $SHELL: $SHELL still names the shell this script was
+# started from, which is exactly what a previous chsh would not have changed.
+current_login_shell() {
+  local shell=""
+  if [[ "$OS" == "macos" ]]; then
+    shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')"
+  else
+    shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)"
+  fi
+  printf '%s' "${shell:-${SHELL:-}}"
+}
+
+# common/zsh ships the .zshrc every OS here uses, so zsh should also be the
+# login shell. macOS already logs into /bin/zsh, which counts - no reason to
+# move anyone to a Homebrew build they did not ask for.
+ensure_zsh_login_shell() {
+  local zsh_path current
+  zsh_path="$(command -v zsh || true)"
+
+  if [[ -z "$zsh_path" ]]; then
+    log_warn "zsh not found - leaving the login shell alone"
+    return 0
+  fi
+
+  current="$(current_login_shell)"
+  if [[ "$(basename "${current:-}")" == "zsh" ]]; then
+    log_success "zsh is already the login shell (${current})"
+    return 0
+  fi
+
+  log_step "Making zsh the login shell (was: ${current:-unknown})"
+
+  # chsh refuses a shell that is not listed in /etc/shells.
+  if ! grep -qxF "$zsh_path" /etc/shells 2>/dev/null; then
+    if printf '%s\n' "$zsh_path" | sudo tee -a /etc/shells >/dev/null; then
+      log_info "added $zsh_path to /etc/shells"
+    else
+      log_error "could not add $zsh_path to /etc/shells - run: chsh -s $zsh_path"
+      return 0
+    fi
+  fi
+
+  if sudo chsh -s "$zsh_path" "$USER"; then
+    log_success "login shell is $zsh_path - it applies at the next login"
+  else
+    log_error "chsh failed - run it manually: chsh -s $zsh_path"
+  fi
+}
+
 # --- Stow ------------------------------------------------------------------
 
 # Moves an existing (non-stow) file/dir at ~/<rel> out of the way so stow can
@@ -352,6 +403,7 @@ main() {
   fi
 
   install_dotfiles
+  ensure_zsh_login_shell
   summary
 }
 
