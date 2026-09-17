@@ -7,7 +7,7 @@ Packages are split by operating system:
 | Directory | Contents |
 | --------- | -------- |
 | `common/` | Works on every OS: `bash`, `fzf`, `ghostty`, `nvim`, `ruff`, `starship`, `zed`, `zsh` |
-| `linux/`  | Arch Linux + Hyprland/Wayland: `hypr`, `noctalia`, plus the superseded `quickshell`, `rofi`, `walker`, `waybar`, `wlogout` |
+| `linux/`  | Arch Linux + Hyprland/Wayland: `hypr`, `noctalia`, plus the superseded `quickshell`, `rofi`, `waybar`, `wlogout` |
 | `macos/`  | macOS: `aerospace`, `karabiner`, `sketchybar`, `skhd`, `zsh-macos` |
 | `install/` | Installer support: `lib/helpers.sh`, `linux/pkgs.txt` (pacman/yay), `macos/Brewfile` |
 
@@ -78,23 +78,20 @@ noctalia`.
 | `hyprpaper` | `[wallpaper]` in `noctalia/config.toml` (`hypr/hyprpaper.conf` is kept but unused) |
 | `hypridle` | `noctalia/idle.toml`; the bar's caffeine widget is the old `hypridle-toggle` |
 | `hyprlock` | the built-in lock screen (`hyprlock` stays installed as a fallback) |
-| `rofi-wayland` | the launcher; `noctalia dmenu` replaces `rofi -dmenu` in scripts |
-| `walker` + the elephant suite | launcher providers and `noctalia/launcher.toml` |
+| `rofi-wayland` | the launcher (`noctalia/launcher.toml`); `noctalia dmenu` replaces `rofi -dmenu` in scripts |
+| `walker` + the elephant suite | dropped entirely - launcher providers cover it |
 | `wiremix` / `bluetui` terminal popups | the control center (still on middle/right click) |
 
-Nothing was deleted: every superseded config stays in the repository and can be
-stowed again with `install.sh --legacy`.
+Apart from walker and elephant, nothing was deleted: the superseded configs stay
+in the repository and stow again with `install.sh --legacy`.
 
-### Before switching a machine over
+### Custom menus
 
-The 15 walker menus in `walker/dot-config/walker/config.toml` point at
-definitions under `~/.config/elephant/`, which were never part of this
-repository. Back them up before uninstalling anything:
-
-    cp -r ~/.config/elephant linux/walker/dot-config/elephant
-
-Only then port the menus worth keeping into
-`[shell.launcher.dmenu.entry.*]` in `noctalia/launcher.toml`.
+Anything that used to be a menu entry becomes a
+`[shell.launcher.dmenu.entry.*]` in `noctalia/launcher.toml`: a command that
+prints one candidate per line, and an `exec` that runs on the selected one.
+`/f` (files) and `/th` (palette) are set up that way. Scripts that used
+`rofi -dmenu` call `noctalia dmenu -p "Pick"` instead.
 
 ### Theme changes must not touch the repository
 
@@ -130,9 +127,17 @@ lines above it, then:
 
 ### Cleaning up later
 
-Once Noctalia has run for a while, unstow the superseded packages and drop them
-from `install/linux/pkgs.txt` (`waybar`, `waybar-module-pacman-updates-git`,
-`rofi-wayland`, `walker`, `elephant-*`, `wlogout`, `hyprpaper`, `hypridle`,
-`quickshell`). `hyprlock` and the legacy configs stay.
+`walker` and the elephant suite are already gone - config, packages and all.
+The others are still here: once Noctalia has run for a while, unstow them and
+drop them from `install/linux/pkgs.txt` (`waybar`,
+`waybar-module-pacman-updates-git`, `rofi-wayland`, `wlogout`, `hyprpaper`,
+`hypridle`, `quickshell`). `hyprlock` and the legacy configs stay.
 
-    stow -t ~ -d linux --dotfile -D quickshell rofi walker waybar wlogout
+    stow -t ~ -d linux --dotfile -D quickshell rofi waybar wlogout
+
+Packages already dropped from `pkgs.txt` are not uninstalled by `install.sh`.
+Remove what is left over by hand:
+
+    yay -Rns walker elephant elephant-calc elephant-clipboard \
+        elephant-desktopapplications elephant-files elephant-menus \
+        elephant-providerlist elephant-symbols elephant-todo

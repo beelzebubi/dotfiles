@@ -20,7 +20,7 @@ STOW_LINUX=(hypr noctalia)
 # Superseded by noctalia but kept in the repository: pass --legacy to stow these
 # as well (the rollback path, together with the commented exec-once lines in
 # hypr/hyprland.conf).
-STOW_LINUX_LEGACY=(quickshell rofi walker waybar wlogout)
+STOW_LINUX_LEGACY=(quickshell rofi waybar wlogout)
 # aerospace/skhd window management + karabiner + sketchybar -> macos/
 # zsh-macos adds the macOS-only .zprofile on top of the shared zsh package.
 STOW_MACOS=(aerospace karabiner sketchybar skhd zsh-macos)
@@ -36,7 +36,7 @@ usage() {
 Usage: install.sh [--legacy] [-h|--help]
 
   --legacy  also stow the Linux packages noctalia replaced
-            (quickshell, rofi, walker, waybar, wlogout)
+            (quickshell, rofi, waybar, wlogout)
 USAGE
 }
 
@@ -137,9 +137,11 @@ free_notification_bus() {
   fi
 }
 
-# hypridle's job moved to [idle.behavior.*] and elephant's to the noctalia
-# launcher. Both are often enabled as user units rather than started from
-# hyprland.conf, so dropping the autostart lines alone would leave them running.
+# Units left over from the pre-noctalia setup. hypridle's job moved to
+# [idle.behavior.*] and the elephant daemon's to the noctalia launcher; both are
+# often enabled as user units rather than started from hyprland.conf, so
+# dropping the autostart lines alone would leave them running. Their packages
+# are gone from pkgs.txt, but pkgs.txt never uninstalls anything.
 disable_superseded_units() {
   local unit
   for unit in hypridle.service elephant.service; do

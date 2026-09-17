@@ -57,7 +57,6 @@ wiremix
 # drop them once noctalia has run for a while (see README).
 quickshell
 rofi-wayland
-walker
 waybar
 waybar-module-pacman-updates-git
 
@@ -102,16 +101,5 @@ rust
 python
 ruff
 npm
-
-# Elephant Suite
-elephant
-elephant-calc
-elephant-clipboard
-elephant-desktopapplications
-elephant-files
-elephant-menus
-elephant-providerlist
-elephant-symbols
-elephant-todo
 
 

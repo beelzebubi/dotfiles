@@ -143,7 +143,6 @@
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 5,
-    "on-click": "walker -t menus -m menus:power-profiles -N -n",
     "states": {
       "warning": 20,
       "critical": 10
@@ -156,10 +155,6 @@
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "qs ipc call panels toggle bluetooth",
     "on-click-right": "ghostty --class=local.bluetui -e bluetui"
-  },
-  "custom/brightness": {
-    "format": "",
-    "on-click": "walker -t menus -m menus:brightness --maxheight 350 --minwidth 50 -N"
   },
   "custom/filemanager": {
     "format": "",

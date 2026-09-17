@@ -1,28 +1,36 @@
-# Launcher - replaces rofi (drun, run, window, filebrowser) and walker/elephant.
+# Launcher - translated from rofi/dot-config/rofi/config.rasi.
 #
 # rofi modi -> Noctalia providers:
-#   drun        -> Applications (default, un-prefixed)
-#   run         -> show_app_actions below
+#   drun        -> Applications, the un-prefixed default
+#   run         -> show_app_actions below (.desktop actions)
 #   window      -> /win
 #   filebrowser -> the /f dmenu entry at the bottom of this file
 #
 # For scripts that called `rofi -dmenu`, the drop-in replacement is
 # `noctalia dmenu -p "Pick"` (stdin in, chosen line out, exit 1 on cancel).
+#
+# What does not carry over: the .rasi theme (the launcher follows the Noctalia
+# palette), rofi's own font (Fira Sans 11 - Noctalia has one shell-wide
+# font_family, set in config.toml), window-format "{w} · {c} · {t}" (the /win
+# provider matches title and app id but has no format string), and the
+# mode-switcher row, which the provider prefixes replace.
 
 [shell.launcher]
-categories       = true
 show_icons       = true      # rofi: show-icons true
-sort_by_usage    = true      # replaces elephant's usage boosting
-show_app_actions = true      # .desktop actions, closest thing to rofi's run mode
+compact          = true      # rofi: drun-display-format "{name}" - name only, no subtitle
+app_grid         = false     # rofi: listview columns 1, lines 1 - a list, not a grid
+categories       = true
+show_app_actions = true      # closest thing to rofi's run mode
+sort_by_usage    = true
 provider_prefix  = "/"
 
 # Built-in prefixes, listed explicitly so the dotfiles document them.
 [shell.launcher.providers.calculator]
-prefix = "calc"              # elephant-calc
+prefix = "calc"
 global = true
 
 [shell.launcher.providers.emoji]
-prefix = "emo"               # elephant-symbols
+prefix = "emo"
 
 [shell.launcher.providers.windows]
 prefix = "win"               # rofi -show window
@@ -37,9 +45,8 @@ prefix = "session"
 prefix = "wall"
 
 # ── dmenu providers ──────────────────────────────────────────────────────────
-# These close the two gaps Noctalia has against the elephant suite.
 
-# elephant-files / rofi -show filebrowser
+# rofi -show filebrowser
 [shell.launcher.dmenu.entry.files]
 command = "fd --type f --max-depth 6 . $HOME"
 label   = "Files"
@@ -48,8 +55,7 @@ glyph   = "folder"
 global  = false
 exec    = "xdg-open \"{selection}\""
 
-# Replaces the walker menus themes / system-themes / waybar-themes:
-# one dmenu entry instead of a script, a panel and three menu definitions.
+# Switching the palette without opening the settings window.
 [shell.launcher.dmenu.entry.theme]
 command = "printf 'Rosé Pine\\nCatppuccin\\nGruvbox\\nKanagawa\\nNord\\nTokyo-Night\\nDracula\\nEldritch\\nAyu\\nNoctalia\\n'"
 label   = "Theme"
@@ -57,11 +63,3 @@ prefix  = "th"
 glyph   = "palette"
 global  = false
 exec    = "noctalia msg color-scheme-set builtin \"{selection}\""
-
-# TODO (needs Phase 0): the 15 walker menu sets in
-# walker/dot-config/walker/config.toml point at definitions under
-# ~/.config/elephant/, which were never in this repository. Back that directory
-# up first, then port the menus that survive (tools, backups, ollama, postgres,
-# transcode, setup, keybindings, menu) into entries shaped like the two above.
-# The theming menus are already covered by /th, capture/screenshots by the
-# screenshot-* commands, brightness and power-profiles by their bar widgets.
