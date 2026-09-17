@@ -61,13 +61,32 @@ Install stow itself, if needed:
     brew bundle --file=~/dotfiles/install/macos/Brewfile
     brew bundle --force cleanup --file=~/dotfiles/install/macos/Brewfile
 
+Hyprland
+--------
+
+`linux/hypr` is a Lua config, which is the format Hyprland uses as of 0.56.
+`hyprland.lua` is the entry point and pulls the rest in with `require`, one
+scope per file, so an error in one of them does not take the whole config
+down:
+
+| File | Contents |
+| ---- | -------- |
+| `hyprland.lua` | autostart, look and feel, animations, input, window and workspace rules |
+| `conf/programs.lua` | terminal, file manager, browser, launcher - returned as a table the other files require |
+| `conf/monitor.lua` | `hl.monitor()` |
+| `conf/env.lua` | `hl.env()`, including the NVIDIA variables |
+| `conf/keybindings.lua` | every `hl.bind()` |
+
+`hyprpaper.conf` stays in its own format - it belongs to hyprpaper, not to
+Hyprland, and Noctalia draws the wallpaper now anyway.
+
 The Linux shell: Noctalia
 -------------------------
 
 `linux/noctalia` is the whole desktop shell: bar, notifications, control
 center, launcher, clipboard history, wallpaper, idle handling, lock screen and
-session menu. `hypr/hyprland.conf` starts it with a single `exec-once =
-noctalia`.
+session menu. `hypr/hyprland.lua` starts it from the `hyprland.start` hook
+with a single `hl.exec_cmd("noctalia")`.
 
 | Was | Is now |
 | --- | ------ |
@@ -119,8 +138,8 @@ If a hand-written value seems ignored, look in
 
 ### Rollback
 
-Comment out `exec-once = noctalia` in `hypr/hyprland.conf`, re-enable the three
-lines above it, then:
+Comment out `hl.exec_cmd("noctalia")` in the `hyprland.start` hook in
+`hypr/hyprland.lua`, re-enable the two lines above it, then:
 
     ./install.sh --legacy
     hyprctl reload

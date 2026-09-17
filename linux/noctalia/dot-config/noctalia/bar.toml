@@ -24,7 +24,7 @@ end    = ["updates", "volume", "bluetooth", "tray", "network",
 # ── start ────────────────────────────────────────────────────────────────────
 
 # waybar had persistent-workspaces {"*": 5}; that is a compositor concern now
-# and lives in hypr/conf/workspaces.conf.
+# and lives in hypr/hyprland.lua as workspace rules.
 [widget.workspaces]
 style         = "regular"
 show_labels   = true

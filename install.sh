@@ -18,8 +18,8 @@ STOW_COMMON=(bash fzf ghostty nvim ruff starship zed zsh)
 # Arch Linux, Hyprland/Wayland stack -> linux/
 STOW_LINUX=(hypr noctalia)
 # Superseded by noctalia but kept in the repository: pass --legacy to stow these
-# as well (the rollback path, together with the commented exec-once lines in
-# hypr/hyprland.conf).
+# as well (the rollback path, together with the commented autostart lines in
+# hypr/hyprland.lua).
 STOW_LINUX_LEGACY=(quickshell rofi waybar wlogout)
 # aerospace/skhd window management + karabiner + sketchybar -> macos/
 # zsh-macos adds the macOS-only .zprofile on top of the shared zsh package.
@@ -115,8 +115,8 @@ ensure_yay() {
 # org.freedesktop.Notifications can only be held by one process. noctalia claims
 # it now, so everything that used to claim it has to go: mako (which dbus will
 # happily activate while it is still installed) and any quickshell instance left
-# over from before the migration - it only ever started via exec-once, so
-# dropping that line plus this kill is enough.
+# over from before the migration - it only ever started from the autostart
+# hook, so dropping that line plus this kill is enough.
 free_notification_bus() {
   if command_exists mako; then
     log_step "Disabling mako (noctalia is the notification daemon now)"
@@ -139,7 +139,7 @@ free_notification_bus() {
 
 # Units left over from the pre-noctalia setup. hypridle's job moved to
 # [idle.behavior.*] and the elephant daemon's to the noctalia launcher; both are
-# often enabled as user units rather than started from hyprland.conf, so
+# often enabled as user units rather than started from hyprland.lua, so
 # dropping the autostart lines alone would leave them running. Their packages
 # are gone from pkgs.txt, but pkgs.txt never uninstalls anything.
 disable_superseded_units() {
