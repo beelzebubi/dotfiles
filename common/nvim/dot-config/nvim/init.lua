@@ -1023,6 +1023,11 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    -- The default branch is `main` now, which is the rewrite and has no
+    -- `nvim-treesitter.configs` module. Without this pin a fresh install
+    -- clones `main` and the config below fails with "module not found".
+    branch = 'master',
+    lazy = false, -- upstream: this plugin does not support lazy-loading
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
