@@ -1,0 +1,28 @@
+# App theming - replaces the planned matugen/darkman/theme-script pipeline.
+#
+# CAREFUL, this is the one place where a theme change can dirty the repository:
+# built-in and community templates write an include or a theme selection into
+# the target application's config. Every config in common/ is a stow symlink
+# into this repository, so a template pointed at one writes straight through it.
+#
+# Rule: only enable templates whose target is NOT stowed (GTK, Qt), and give
+# user templates an output_path outside ~/.config, because ~/.config/noctalia
+# is a stow symlink too.
+#
+# ghostty needs no template at all: common/ghostty already carries
+# `theme = dark:Rose Pine,light:Rose Pine Dawn` and follows the color-scheme
+# preference Noctalia sets.
+
+[theme.templates]
+enable_builtin_templates   = true
+builtin_ids                = []   # TODO: run `noctalia theme --list-templates`
+                                  # and opt in to the GTK and Qt ids.
+enable_community_templates = false
+community_ids              = []
+
+# Example of a safe user template: input from this stowed directory, output to a
+# path that is not stowed, so nothing writes back into the repository.
+# [theme.templates.user.example]
+# input_path  = "$XDG_CONFIG_HOME/noctalia/templates/example.tmpl"
+# output_path = "$XDG_DATA_HOME/noctalia-templates/example.conf"
+# post_hook   = "true"

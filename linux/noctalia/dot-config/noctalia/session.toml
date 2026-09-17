@@ -1,0 +1,38 @@
+# Session panel - replaces wlogout (wlogout/dot-config/wlogout/layout).
+#
+# Noctalia's default five are Lock, Log out, Lock & Suspend, Reboot, Shut down.
+# The layout below keeps wlogout's entries, including hibernate, which has no
+# native action and stays a shell command.
+
+[shell.session]
+grid           = true
+grid_columns   = 3
+show_shortcuts = true
+
+[[shell.session.actions]]
+action   = "lock"
+shortcut = "l"                      # wlogout keybind: l
+
+[[shell.session.actions]]
+action   = "command"
+label    = "Hibernate"
+glyph    = "bedtime"
+command  = "systemctl hibernate"
+shortcut = "h"
+
+[[shell.session.actions]]
+action   = "logout"
+shortcut = "e"
+
+[[shell.session.actions]]
+action   = "shutdown"
+variant  = "destructive"
+shortcut = "s"
+
+[[shell.session.actions]]
+action   = "suspend"
+shortcut = "u"
+
+[[shell.session.actions]]
+action   = "reboot"
+shortcut = "r"

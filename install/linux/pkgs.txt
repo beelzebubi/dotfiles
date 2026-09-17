@@ -48,9 +48,13 @@ hyprwayland-scanner
 xdg-desktop-portal-hyprland
 
 # Wayland UI & Utilities
+noctalia
 grim
 slurp
 wiremix
+# Superseded by noctalia. Still installed so `install.sh --legacy` plus the
+# commented exec-once lines in hypr/hyprland.conf are a one-minute rollback;
+# drop them once noctalia has run for a while (see README).
 quickshell
 rofi-wayland
 walker

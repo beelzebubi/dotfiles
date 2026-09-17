@@ -1,0 +1,23 @@
+# Idle - replaces hypridle. The bar's caffeine widget is the inhibitor toggle
+# that custom/hypridle + hypridle-toggle used to provide.
+#
+# lock and screen_off are native actions and need no command; the lock screen
+# itself replaces hyprlock (which stays installed as a fallback).
+
+[idle]
+behavior_order = ["lock", "screen-off", "suspend"]
+
+[idle.behavior.lock]
+timeout = 600
+action  = "lock"
+enabled = true
+
+[idle.behavior.screen-off]
+timeout = 660
+action  = "screen_off"
+enabled = true
+
+[idle.behavior.suspend]
+timeout = 1800
+action  = "lock_and_suspend"
+enabled = true

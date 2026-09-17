@@ -1,0 +1,127 @@
+# Bar - translated from waybar/config.jsonc + waybar/modules.json.
+#
+# waybar: position top, height 26, spacing 0, layer top, full width.
+# The CSS (waybar/style.css, themes/rose-pine.css) has no counterpart here:
+# Noctalia paints from the palette, so the visual fine-tuning below is the
+# geometry only.
+
+[bar.default]
+position           = "top"
+thickness          = 26      # waybar height: 26
+background_opacity = 1.0
+radius             = 0       # waybar was a flat, edge-to-edge bar
+margin_ends        = 0
+margin_edge        = 0
+widget_spacing     = 4       # waybar spacing: 0 - raise if the bar feels cramped
+reserve_space      = true
+layer              = "top"
+
+start  = ["workspaces", "filemanager"]
+center = ["clock"]
+end    = ["updates", "volume", "bluetooth", "tray", "network",
+          "cpu", "ram", "caffeine", "battery", "power_profile", "session"]
+
+# ── start ────────────────────────────────────────────────────────────────────
+
+# waybar had persistent-workspaces {"*": 5}; that is a compositor concern now
+# and lives in hypr/conf/workspaces.conf.
+[widget.workspaces]
+style         = "regular"
+show_labels   = true
+label_source  = "id"
+scroll_repeat = "steps"     # waybar scrolled one workspace per detent
+
+# waybar: custom/filemanager -> dolphin
+[widget.filemanager]
+type    = "custom_button"
+glyph   = "folder"
+tooltip = "Open Filemanager"
+
+[widget.filemanager.actions]
+left = "exec dolphin"
+
+# ── center ───────────────────────────────────────────────────────────────────
+
+# waybar: "{:L%a. %d. %b.  %H:%M}" with format-alt "{:%d %B %Y}" on click.
+# There is no format-alt; the alternate format becomes the hover tooltip.
+[widget.clock]
+format         = "{:%a. %d. %b.  %H:%M}"
+tooltip_format = "{:%d %B %Y}"
+
+[widget.clock.actions]
+left = "panel-toggle control-center calendar"
+
+# ── end ──────────────────────────────────────────────────────────────────────
+
+# waybar: custom/updates via waybar-module-pacman-updates-git.
+# No built-in widget can render command output, so this is the button without
+# the counter. A counter needs a Luau bar-widget plugin - see README.
+[widget.updates]
+type    = "custom_button"
+glyph   = "refresh"
+tooltip = "Arch updates"
+
+[widget.updates.actions]
+left = "exec ghostty --class=local.floating -e arch-update-check"
+
+[widget.volume]
+show_label = false
+
+[widget.volume.actions]
+left        = "panel-toggle control-center audio"
+middle      = "exec ghostty --class=local.wiremix -e wiremix"
+right       = "volume-mute"
+scroll_up   = "volume-up 1"     # waybar scroll-step: 1
+scroll_down = "volume-down 1"
+
+# left opens the Bluetooth tab by default; right powers the adapter off, which
+# the bluetui popup replaces here.
+[widget.bluetooth.actions]
+right = "exec ghostty --class=local.bluetui -e bluetui"
+
+# left opens the Network tab by default.
+[widget.network]
+show_label = false
+
+[widget.network.actions]
+right = "exec ghostty --class=local.floating -e nmtui"
+
+[widget.cpu]
+type = "sysmon"
+stat = "cpu_usage"
+
+[widget.cpu.actions]
+left = "exec ghostty -e btop"
+
+[widget.ram]
+type = "sysmon"
+stat = "ram_pct"
+
+# waybar: custom/hypridle + hypridle-toggle
+[widget.caffeine]
+
+[widget.battery]
+display_mode  = "glyph"
+show_label    = true
+label_content = "percent"
+
+# waybar put the power-profiles menu behind a battery click; it is its own
+# widget now: left steps forward, right steps back.
+[widget.power_profile]
+
+# ── defined but unused, as in waybar ─────────────────────────────────────────
+# custom/music and custom/brightness were configured but not in modules-right.
+# [widget.media]
+# hide_when_no_media = true
+#
+# [widget.brightness]
+#
+# The ethernet bandwidth readout (format-ethernet ⇣/⇡) is not part of the
+# network widget; it takes two sysmon instances:
+# [widget.net_rx]
+# type = "sysmon"
+# stat = "net_rx"
+#
+# [widget.net_tx]
+# type = "sysmon"
+# stat = "net_tx"

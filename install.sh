@@ -16,7 +16,11 @@ source "$DOTFILES_DIR/install/lib/helpers.sh"
 # Stow packages shared by every OS -> common/
 STOW_COMMON=(bash fzf ghostty nvim ruff starship zed zsh)
 # Arch Linux, Hyprland/Wayland stack -> linux/
-STOW_LINUX=(hypr quickshell rofi walker waybar wlogout)
+STOW_LINUX=(hypr noctalia)
+# Superseded by noctalia but kept in the repository: pass --legacy to stow these
+# as well (the rollback path, together with the commented exec-once lines in
+# hypr/hyprland.conf).
+STOW_LINUX_LEGACY=(quickshell rofi walker waybar wlogout)
 # aerospace/skhd window management + karabiner + sketchybar -> macos/
 # zsh-macos adds the macOS-only .zprofile on top of the shared zsh package.
 STOW_MACOS=(aerospace karabiner sketchybar skhd zsh-macos)
@@ -25,6 +29,34 @@ OS=""
 OS_STOW_DIR=""
 OS_STOW_PACKAGES=()
 BACKUP_DIR=""
+WITH_LEGACY=0
+
+usage() {
+  cat <<'USAGE'
+Usage: install.sh [--legacy] [-h|--help]
+
+  --legacy  also stow the Linux packages noctalia replaced
+            (quickshell, rofi, walker, waybar, wlogout)
+USAGE
+}
+
+parse_args() {
+  while (($#)); do
+    case "$1" in
+      --legacy) WITH_LEGACY=1 ;;
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      *)
+        log_error "Unknown argument: $1"
+        usage
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
 
 detect_os() {
   local kernel
@@ -38,6 +70,10 @@ detect_os() {
       OS="linux"
       OS_STOW_DIR="$DOTFILES_DIR/linux"
       OS_STOW_PACKAGES=("${STOW_LINUX[@]}")
+      if ((WITH_LEGACY)); then
+        OS_STOW_PACKAGES+=("${STOW_LINUX_LEGACY[@]}")
+        log_info "Including legacy packages: ${STOW_LINUX_LEGACY[*]}"
+      fi
       ;;
     Darwin)
       OS="macos"
@@ -76,26 +112,52 @@ ensure_yay() {
   log_success "yay installed"
 }
 
-# org.freedesktop.Notifications can only be held by one process. quickshell
-# claims it now, but dbus will happily activate a still-installed mako and one
-# of the two will lose the name, so take mako out of the running first.
-disable_mako() {
-  command_exists mako || return 0
-  log_step "Disabling mako (quickshell is the notification daemon now)"
+# org.freedesktop.Notifications can only be held by one process. noctalia claims
+# it now, so everything that used to claim it has to go: mako (which dbus will
+# happily activate while it is still installed) and any quickshell instance left
+# over from before the migration - it only ever started via exec-once, so
+# dropping that line plus this kill is enough.
+free_notification_bus() {
+  if command_exists mako; then
+    log_step "Disabling mako (noctalia is the notification daemon now)"
 
-  if systemctl --user mask mako.service &>/dev/null; then
-    log_success "masked mako.service"
-  else
-    log_warn "could not mask mako.service - remove mako manually if notifications misbehave"
+    if systemctl --user mask mako.service &>/dev/null; then
+      log_success "masked mako.service"
+    else
+      log_warn "could not mask mako.service - remove mako manually if notifications misbehave"
+    fi
+
+    pkill -x mako &>/dev/null || true
   fi
 
-  pkill -x mako &>/dev/null || true
+  if pgrep -x qs &>/dev/null; then
+    log_step "Stopping the leftover quickshell shell"
+    pkill -x qs &>/dev/null || true
+    log_success "quickshell stopped"
+  fi
 }
 
-# quickshell's network panel talks to NetworkManager, which this setup did not
-# run before (it used bare iwd via impala). Put NetworkManager in front but let
-# it keep using iwd as its wifi backend, so the known networks already stored
-# under /var/lib/iwd are not lost.
+# hypridle's job moved to [idle.behavior.*] and elephant's to the noctalia
+# launcher. Both are often enabled as user units rather than started from
+# hyprland.conf, so dropping the autostart lines alone would leave them running.
+disable_superseded_units() {
+  local unit
+  for unit in hypridle.service elephant.service; do
+    systemctl --user is-enabled "$unit" &>/dev/null || continue
+    log_step "Disabling $unit (noctalia took over)"
+
+    if systemctl --user disable --now "$unit" &>/dev/null; then
+      log_success "$unit disabled"
+    else
+      log_warn "could not disable $unit - do it manually"
+    fi
+  done
+}
+
+# The shell's network panel (quickshell's before, noctalia's now) talks to
+# NetworkManager, which this setup did not run before (it used bare iwd via
+# impala). Put NetworkManager in front but let it keep using iwd as its wifi
+# backend, so the known networks already stored under /var/lib/iwd are not lost.
 setup_networkmanager() {
   command_exists nmcli || return 0
   log_step "Configuring NetworkManager (iwd stays the wifi backend)"
@@ -262,6 +324,7 @@ summary() {
 }
 
 main() {
+  parse_args "$@"
   log_step "Dotfiles installation"
   detect_os
   init_submodules
@@ -272,7 +335,8 @@ main() {
       ensure_yay
       install_arch_packages
       setup_networkmanager
-      disable_mako
+      free_notification_bus
+      disable_superseded_units
       ;;
     macos)
       ensure_homebrew

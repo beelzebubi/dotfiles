@@ -1,0 +1,67 @@
+# Launcher - replaces rofi (drun, run, window, filebrowser) and walker/elephant.
+#
+# rofi modi -> Noctalia providers:
+#   drun        -> Applications (default, un-prefixed)
+#   run         -> show_app_actions below
+#   window      -> /win
+#   filebrowser -> the /f dmenu entry at the bottom of this file
+#
+# For scripts that called `rofi -dmenu`, the drop-in replacement is
+# `noctalia dmenu -p "Pick"` (stdin in, chosen line out, exit 1 on cancel).
+
+[shell.launcher]
+categories       = true
+show_icons       = true      # rofi: show-icons true
+sort_by_usage    = true      # replaces elephant's usage boosting
+show_app_actions = true      # .desktop actions, closest thing to rofi's run mode
+provider_prefix  = "/"
+
+# Built-in prefixes, listed explicitly so the dotfiles document them.
+[shell.launcher.providers.calculator]
+prefix = "calc"              # elephant-calc
+global = true
+
+[shell.launcher.providers.emoji]
+prefix = "emo"               # elephant-symbols
+
+[shell.launcher.providers.windows]
+prefix = "win"               # rofi -show window
+
+[shell.launcher.providers.panels]
+prefix = "pan"
+
+[shell.launcher.providers.session]
+prefix = "session"
+
+[shell.launcher.providers.wallpaper]
+prefix = "wall"
+
+# ── dmenu providers ──────────────────────────────────────────────────────────
+# These close the two gaps Noctalia has against the elephant suite.
+
+# elephant-files / rofi -show filebrowser
+[shell.launcher.dmenu.entry.files]
+command = "fd --type f --max-depth 6 . $HOME"
+label   = "Files"
+prefix  = "f"
+glyph   = "folder"
+global  = false
+exec    = "xdg-open \"{selection}\""
+
+# Replaces the walker menus themes / system-themes / waybar-themes:
+# one dmenu entry instead of a script, a panel and three menu definitions.
+[shell.launcher.dmenu.entry.theme]
+command = "printf 'Rosé Pine\\nCatppuccin\\nGruvbox\\nKanagawa\\nNord\\nTokyo-Night\\nDracula\\nEldritch\\nAyu\\nNoctalia\\n'"
+label   = "Theme"
+prefix  = "th"
+glyph   = "palette"
+global  = false
+exec    = "noctalia msg color-scheme-set builtin \"{selection}\""
+
+# TODO (needs Phase 0): the 15 walker menu sets in
+# walker/dot-config/walker/config.toml point at definitions under
+# ~/.config/elephant/, which were never in this repository. Back that directory
+# up first, then port the menus that survive (tools, backups, ollama, postgres,
+# transcode, setup, keybindings, menu) into entries shaped like the two above.
+# The theming menus are already covered by /th, capture/screenshots by the
+# screenshot-* commands, brightness and power-profiles by their bar widgets.

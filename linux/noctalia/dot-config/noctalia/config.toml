@@ -1,0 +1,74 @@
+# Noctalia - base configuration.
+#
+# Noctalia merges every *.toml directly in ~/.config/noctalia/ alphabetically,
+# so this file only holds the global shell settings; the bar, launcher, idle,
+# session and template settings live next to it in their own files.
+#
+# GUI changes do NOT land here - they go to ~/.local/state/noctalia/settings.toml
+# and win over this file. That state path is not stowed, which is what keeps this
+# repository clean when the theme changes. If a value here seems ignored, look
+# there first (the file is safe to delete).
+
+[shell]
+font_family = "JetBrainsMono Nerd Font"   # same family waybar and the quickshell popups used
+time_format = "{:%H:%M}"
+date_format = "%a. %d. %b."
+clipboard_enabled = true                  # replaces elephant-clipboard / walker -m clipboard
+# polkit_agent = true                     # would replace hyprpolkitagent; unverified, see README
+
+[shell.panel]
+control_center_placement = "attached"
+launcher_placement       = "floating"
+clipboard_placement      = "floating"
+
+[shell.screenshot]
+# Output policy shared by the screenshot widget and the screenshot-* IPC commands.
+# The old bind piped grim/slurp into wl-copy, so keep copying the default.
+close_on_copy = true
+close_on_save = true
+
+# ── Theme ────────────────────────────────────────────────────────────────────
+# Rosé Pine ships with Noctalia. Check it against waybar/themes/rose-pine.css
+# before building a custom palette under palettes/RosePine.json.
+
+[theme]
+mode    = "dark"
+source  = "builtin"
+builtin = "Rosé Pine"
+
+# Sun-driven dark/light switching needs a location. Fill one of these in and set
+# mode = "auto" above; [location] also feeds weather and night light.
+# [location]
+# address = "Leipzig"        # geocoded when auto_locate = false
+# auto_locate = true         # resolve coordinates from the IP address instead
+# custom_schedule = true     # or skip coordinates entirely and use fixed times
+# sunrise = "07:30"
+# sunset  = "20:30"
+
+# ── Notifications ────────────────────────────────────────────────────────────
+# Replaces mako and the quickshell notification center.
+
+[notification]
+enable_daemon = true
+show_app_name = true
+show_actions  = true
+
+# ── Wallpaper ────────────────────────────────────────────────────────────────
+# Ported from hypr/hyprpaper.conf (fit_mode = cover -> fill_mode = crop).
+
+[wallpaper]
+enabled   = true
+fill_mode = "crop"
+directory = "~/Nextcloud/Privat/Desktophintergründe/Japan - online"
+
+[wallpaper.default]
+path = "~/Nextcloud/Privat/Desktophintergründe/Japan - online/573233.jpg"
+
+# ── System monitor ───────────────────────────────────────────────────────────
+# Sampling is global, not per widget: waybar polled cpu every 5s, memory every 30s.
+
+[system.monitor]
+enabled             = true
+cpu_poll_seconds    = 5.0
+memory_poll_seconds = 5.0
+network_poll_seconds = 5.0
