@@ -52,13 +52,10 @@ noctalia
 grim
 slurp
 wiremix
-# Superseded by noctalia. Still installed so `install.sh --legacy` plus the
-# commented autostart lines in hypr/hyprland.lua are a one-minute rollback;
-# drop them once noctalia has run for a while (see README).
-quickshell
-rofi-wayland
-waybar
-waybar-module-pacman-updates-git
+# quickshell
+# rofi-wayland
+# waybar
+# waybar-module-pacman-updates-git
 
 # Audio
 pamixer
@@ -90,7 +87,6 @@ noto-fonts-emoji
 otf-font-awesome
 ttf-cascadia-mono-nerd
 ttf-jetbrains-mono-nerd
-yaru-icon-theme
 
 # Applications
 stow
